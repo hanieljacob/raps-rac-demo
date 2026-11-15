@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>RAPS RAC Demo — Cited Assistant, Eligibility Checker &amp; Staff View</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f8f7;
+    --surface:#ffffff;
+    --surface-2:#eef2f0;
+    --surface-3:#e3eae6;
+    --ink:#13222b;
+    --ink-2:#43545f;
+    --ink-3:#6b7d88;
+    --line:#d7dfdb;
+    --teal:#0b6b66;
+    --teal-dark:#084f4b;
+    --teal-soft:#dff0ee;
+    --navy:#12344d;
+    --amber:#9a5b00;
+    --amber-bg:#fdf0d3;
+    --green:#1a6b3c;
+    --green-bg:#dff3e4;
+    --red:#9e2b25;
+    --red-bg:#fbe7e4;
+    --radius:14px;
+    --radius-sm:9px;
+    --shadow:0 1px 2px rgba(18,52,77,.06),0 8px 24px rgba(18,52,77,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1518;
+      --surface:#162126;
+      --surface-2:#1c2a30;
+      --surface-3:#24343b;
+      --ink:#e8efec;
+      --ink-2:#b6c4bf;
+      --ink-3:#8a9a95;
+      --line:#2c3d42;
+      --teal:#3ec2b8;
+      --teal-dark:#7fd8d0;
+      --teal-soft:#123b38;
+      --navy:#a8cbe8;
+      --amber:#f0b95a;
+      --amber-bg:#3a2c10;
+      --green:#6fd598;
+      --green-bg:#143626;
+      --red:#ff9a92;
+      --red-bg:#3d1d1a;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  button,[role="button"],select,input,textarea{font:inherit}
+  button,select,input[type="text"],input[type="number"]{min-height:44px}
+  a{color:var(--teal)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 18px 56px}
+
+  /* Header */
+  .topbar{border-bottom:1px solid var(--line);background:var(--surface)}
+  .topbar-inner{max-width:1120px;margin:0 auto;padding:22px 18px 18px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
+  .brandline{display:flex;gap:14px;align-items:flex-start;max-width:680px}
+  .mark{width:46px;height:46px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:"IBM Plex Serif",serif;font-weight:700;font-size:15px;letter-spacing:.02em;flex:none}
+  @media (prefers-color-scheme: dark){.mark{background:var(--teal-soft);color:var(--teal-dark)}}
+  h1{font-family:"IBM Plex Serif",Georgia,serif;font-size:clamp(24px,4vw,34px);line-height:1.12;margin:2px 0 6px;font-weight:700;letter-spacing:-.01em}
+  .lede{margin:0;color:var(--ink-2);font-size:15.5px;max-width:62ch}
+  .source-note{margin-top:10px;font-size:13px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 14px}
+  .source-note a{font-weight:500}
+  .demo-badge{flex:none;background:var(--teal-soft);color:var(--teal-dark);border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+
+  /* Stats strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 4px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+  .stat b{display:block;font-size:22px;line-height:1.1;font-weight:700}
+  .stat span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-2);line-height:1.4}
+  @media(max-width:720px){.stats{grid-template-columns:1fr 1fr}}
+
+  /* Tabs */
+  .tabs{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 10px}
+  .tablist{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:5px;flex-wrap:wrap}
+  @media(max-width:640px){.tab{flex:1 1 42%}}
+  .tab{flex:1 0 auto;border:0;background:transparent;color:var(--ink-2);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;min-height:44px;white-space:nowrap}
+  .tab[aria-selected="true"]{background:var(--navy);color:#fff}
+  @media (prefers-color-scheme: dark){.tab[aria-selected="true"]{background:var(--teal);color:#082a28}}
+  .tab:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .18s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){.panel.active{animation:none} html{scroll-behavior:auto}}
+
+  .grid-2{display:grid;grid-template-columns:1.55fr .95fr;gap:16px;align-items:start}
+  @media(max-width:860px){.grid-2{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+  .card h2{font-family:"IBM Plex Serif",Georgia,serif;font-size:20px;margin:0 0 6px;line-height:1.25}
+  .card h3{font-size:15px;margin:18px 0 8px}
+  .card p{color:var(--ink-2)}
+  .card p:first-of-type{margin-top:0}
+  .small{font-size:13px;color:var(--ink-3)}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px}
+
+  /* Assistant */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+  .chip{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:9px 13px;font-size:13.5px;font-weight:500;cursor:pointer;min-height:40px;text-align:left}
+  .chip:hover{border-color:var(--teal);color:var(--teal-dark)}
+  .askrow{display:flex;gap:8px;margin-top:14px}
+  .askrow input{flex:1;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--surface);color:var(--ink);min-width:0}
+  .btn{border:0;border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer;min-height:44px}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-dark)}
+  @media (prefers-color-scheme: dark){.btn-primary{color:#06201e}}
+  .btn-ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+  .btn-navy{background:var(--navy);color:#fff}
+  .log{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+  .msg-q{align-self:flex-end;max-width:88%;background:var(--navy);color:#fff;padding:11px 14px;border-radius:14px 14px 4px 14px;font-size:14.5px}
+  @media (prefers-color-scheme: dark){.msg-q{background:var(--surface-3);color:var(--ink)}}
+  .msg-a{align-self:flex-start;max-width:96%;width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:15px 16px}
+  .msg-a .ans{font-size:14.5px}
+  .msg-a .ans ul{margin:8px 0 8px 18px;padding:0}
+  .msg-a .ans li{margin:4px 0}
+  .cite{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;display:flex;gap:10px;align-items:flex-start}
+  .cite-icon{width:28px;height:28px;border-radius:7px;background:var(--teal-soft);color:var(--teal-dark);display:grid;place-items:center;font-size:13px;flex:none;font-weight:700}
+  .cite b{font-size:13px;display:block}
+  .cite span{font-size:12.5px;color:var(--ink-2);display:block}
+  .cite a{font-size:12.5px;font-weight:500}
+  .conf{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;margin-bottom:8px}
+  .conf-high{background:var(--green-bg);color:var(--green)}
+  .conf-refuse{background:var(--amber-bg);color:var(--amber)}
+  .handoff{margin-top:12px;background:var(--amber-bg);border-radius:var(--radius-sm);padding:12px 13px;font-size:13.5px}
+  .handoff b{display:block;margin-bottom:4px}
+  .empty{border:1.5px dashed var(--line);border-radius:var(--radius);padding:22px;text-align:center;color:var(--ink-3);font-size:14px}
+
+  /* Docs list */
+  .doc{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .doc:last-child{border-bottom:0}
+  .doc-num{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+  .doc b{font-size:14px;display:block}
+  .doc span{font-size:12.5px;color:var(--ink-2);display:block}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:999px;background:var(--teal-soft);color:var(--teal-dark);margin-top:5px}
+
+  /* Eligibility */
+  .field{margin-bottom:16px}
+  .field label{display:block;font-weight:600;font-size:14px;margin-bottom:7px}
+  .field select,.field input[type="number"]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:var(--surface);color:var(--ink)}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media(max-width:520px){.checks{grid-template-columns:1fr}}
+  .check{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:11px 12px;cursor:pointer;min-height:44px}
+  .check input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--teal)}
+  .check span{font-size:13.5px;line-height:1.4}
+  .check span small{display:block;color:var(--ink-3);font-size:12px}
+  .range-row{display:flex;align-items:center;gap:12px}
+  .range-row input[type="range"]{flex:1;accent-color:var(--teal);min-height:44px}
+  .range-val{font-weight:700;font-size:18px;min-width:74px;text-align:right}
+  .verdict{border-radius:var(--radius);padding:18px;border:1px solid var(--line)}
+  .verdict-yes{background:var(--green-bg);border-color:transparent}
+  .verdict-no{background:var(--red-bg);border-color:transparent}
+  .verdict-close{background:var(--amber-bg);border-color:transparent}
+  .verdict h3{margin:0 0 6px;font-size:17px}
+  .verdict p{margin:6px 0;color:var(--ink)}
+  .rulebox{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 14px;font-size:13.5px}
+  .rulebox b{display:block;margin-bottom:4px}
+  table.paths{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+  table.paths th,table.paths td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  table.paths th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
+  tr.you td{background:var(--teal-soft);font-weight:600}
+
+  /* Staff */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+  @media(max-width:720px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+  .kpi b{font-size:24px;display:block;line-height:1.1}
+  .kpi span{font-size:12.5px;color:var(--ink-2)}
+  .queue{display:flex;flex-direction:column;gap:12px}
+  .qitem{border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;background:var(--surface)}
+  .qitem-head{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .qitem h3{margin:0;font-size:15px;flex:1;min-width:200px}
+  .status{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap}
+  .st-answered{background:var(--green-bg);color:var(--green)}
+  .st-handoff{background:var(--amber-bg);color:var(--amber)}
+  .st-draft{background:var(--teal-soft);color:var(--teal-dark)}
+  .qitem p{font-size:13.5px;margin:8px 0}
+  .qitem textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 11px;background:var(--surface-2);color:var(--ink);font-size:13.5px;resize:vertical;min-height:74px;margin-top:6px}
+  .qmeta{font-size:12px;color:var(--ink-3);margin-top:8px;display:flex;flex-wrap:wrap;gap:4px 14px}
+
+  /* Tests */
+  .score-hero{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .score-ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;flex:none;background:conic-gradient(var(--teal) calc(var(--p,0)*1%), var(--surface-3) 0)}
+  .score-ring inner{display:none}
+  .score-inner{width:82px;height:82px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
+  .score-inner b{font-size:21px;line-height:1;display:block}
+  .score-inner span{font-size:10.5px;color:var(--ink-3);display:block;margin-top:2px}
+  .test-row{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .test-row:last-child{border-bottom:0}
+  .test-ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;margin-top:1px}
+  .ic-pass{background:var(--green-bg);color:var(--green)}
+  .ic-fail{background:var(--red-bg);color:var(--red)}
+  .ic-wait{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--line)}
+  .test-row b{font-size:14px;display:block}
+  .test-row span{font-size:12.5px;color:var(--ink-2);display:block}
+  .expect{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 7px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);white-space:nowrap;margin-top:3px}
+
+  footer{margin-top:28px;border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brandline">
+      <div class="mark" aria-hidden="true">RAC</div>
+      <div>
+        <h1>RAPS RAC Assistant</h1>
+        <p class="lede">A working demo for the Regulatory Affairs Certification — answers drawn only from RAPS public candidate guides, with the source shown on every answer, an eligibility checker, and a staff view for the questions it cannot answer.</p>
+        <div class="source-note">
+          <span>Sources ingested Nov 15, 2026</span>
+          <a href="https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html" target="_blank" rel="noopener">RAPS RAC guide</a>
+          <a href="https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf" target="_blank" rel="noopener">RAC-Devices Candidate Guide 2026 (PDF)</a>
+          <a href="https://www.raps.org/asset/A7F6A07B%2DFD9E%2D4059%2DABE5B478A133035B/" target="_blank" rel="noopener">RAC Recertification Guide</a>
+        </div>
+      </div>
+    </div>
+    <div class="demo-badge">Demo · RAPS public documents only</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stats" aria-label="RAC at a glance">
+    <div class="stat"><b>2 credentials</b><span>RAC-Drugs for pharmaceuticals &amp; biologics, RAC-Devices for medical devices &amp; IVDs</span></div>
+    <div class="stat"><b>120 questions · 2.5 hrs</b><span>Multiple-choice exam — recall, application and analysis questions (2026 Candidate Guide)</span></div>
+    <div class="stat"><b>36 credits / 3 years</b><span>Recertification credits required every three years to keep the credential</span></div>
+    <div class="stat"><b>3 windows a year</b><span>Spring, summer and autumn testing windows</span></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tablist" role="tablist" aria-label="Demo views">
+      <button class="tab" role="tab" aria-selected="true" data-view="assistant" id="tab-assistant">Member assistant</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="eligibility" id="tab-eligibility">Eligibility checker</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="staff" id="tab-staff">Staff view <span id="staffCount"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-view="tests" id="tab-tests">Test set &amp; score</button>
+    </div>
+  </div>
+
+  <!-- ============ ASSISTANT ============ -->
+  <section class="panel active" id="view-assistant" role="tabpanel" aria-labelledby="tab-assistant">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Ask about the RAC</h2>
+        <p>Every answer is built from the documents listed on the right. If the guides do not cover a question, the assistant says so and prepares a handoff for staff instead of guessing.</p>
+        <div class="chips" id="chips"></div>
+        <form class="askrow" id="askForm">
+          <label class="sr" for="askInput">Ask a question about the RAC</label>
+          <input type="text" id="askInput" placeholder="e.g. Am I eligible with a master's and 2 years in QA?" autocomplete="off" />
+          <button class="btn btn-primary" type="submit">Ask</button>
+        </form>
+        <div class="log" id="log" aria-live="polite">
+          <div class="empty" id="emptyState">Try a suggested question above, or type your own. Answers appear here with their source.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h2>Documents in this demo</h2>
+          <p class="small" style="margin-bottom:4px">The assistant can only cite what is in here. Anything outside this set triggers the handoff path.</p>
+          <div class="doc">
+            <div class="doc-num">1</div>
+            <div><b>RAC-Devices Candidate Guide 2026</b><span>Eligibility, exam process, content outline — RAPS</span><span class="pill">Ingested</span></div>
+          </div>
+          <div class="doc">
+            <div class="doc-num">2</div>
+            <div><b>RAC-Drugs Candidate Guide 2026</b><span>Eligibility and exam process for the drugs credential — RAPS</span><span class="pill">Ingested</span></div>
+          </div>
+          <div class="doc">
+            <div class="doc-num">3</div>
+            <div><b>Is the RAC right for you? — RAPS guide</b><span>Credential overview, exam format, preparation guidance — raps.org</span><span class="pill">Ingested</span></div>
+          </div>
+          <div class="doc">
+            <div class="doc-num">4</div>
+            <div><b>RAC Recertification Guide</b><span>36 credits, three-year cycle, multiple-credential rule — RAPS</span><span class="pill">Ingested</span></div>
+          </div>
+          <h3>How the guardrail works</h3>
+          <p style="font-size:14px">The assistant scores your question against the guide sections. A strong match returns an answer with a citation and a confidence label. A weak or no match returns a refusal, a plain-language summary of what you asked, and a draft for staff — visible in the Staff view tab.</p>
+          <p style="font-size:14px">Try asking something the guides do not cover, like <em>“What hotel is near the Rockville test center?”</em> or <em>“Can you write my experience statement for me?”</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ELIGIBILITY ============ -->
+  <section class="panel" id="view-eligibility" role="tabpanel" aria-labelledby="tab-eligibility">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Check your eligibility</h2>
+        <p>Enter your degree and regulatory experience. The checker applies the exact combinations from the candidate guides and shows the rule behind the result.</p>
+        <form id="eligForm">
+          <div class="field">
+            <label for="degree">Highest degree</label>
+            <select id="degree">
+              <option value="bachelor">Bachelor's / baccalaureate or equivalent first degree</option>
+              <option value="master">Master's degree</option>
+              <option value="doctorate">Doctorate degree</option>
+              <option value="none">No degree</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="years">Years of regulatory or regulatory-related experience</label>
+            <div class="range-row">
+              <input type="range" id="years" min="0" max="12" step="0.5" value="2" />
+              <div class="range-val"><span id="yearsVal">2</span> yrs</div>
+            </div>
+          </div>
+          <div class="field">
+            <label>What kind of experience is it? Select all that apply</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" class="exp-type" value="regulatory" checked /><span>Regulatory affairs<small>Submissions, strategy, compliance</small></span></label>
+              <label class="check"><input type="checkbox" class="exp-type" value="qa" /><span>Quality assurance<small>Counts as regulatory-related</small></span></label>
+              <label class="check"><input type="checkbox" class="exp-type" value="qc" /><span>Quality control<small>Counts as regulatory-related</small></span></label>
+              <label class="check"><input type="checkbox" class="exp-type" value="clinical" /><span>Clinical research<small>Related to approval of health products</small></span></label>
+              <label class="check"><input type="checkbox" class="exp-type" value="pm" /><span>Health product project management<small>Counts as regulatory-related</small></span></label>
+              <label class="check"><input type="checkbox" class="exp-type" value="other" /><span>Other work<small>Not regulatory-related, e.g. general admin or sales</small></span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cred">Which credential are you considering?</label>
+            <select id="cred">
+              <option value="devices">RAC-Devices — medical devices &amp; IVDs</option>
+              <option value="drugs">RAC-Drugs — pharmaceuticals, biologics &amp; biotech</option>
+              <option value="unsure">Not sure yet</option>
+            </select>
+          </div>
+          <button class="btn btn-navy" type="submit" style="width:100%">Check eligibility</button>
+        </form>
+      </div>
+      <div>
+        <div id="eligResult"></div>
+        <div class="card" style="margin-top:16px">
+          <h2>The four eligibility paths</h2>
+          <p class="small">From the RAC Candidate Guides. You need to meet <b>one</b> combination in full, and attest to it in the application.</p>
+          <table class="paths">
+            <thead><tr><th>Education</th><th>Regulatory experience</th></tr></thead>
+            <tbody>
+              <tr data-path="bachelor"><td>Bachelor's or equivalent</td><td>Minimum 3 years</td></tr>
+              <tr data-path="master"><td>Master's degree</td><td>Minimum 2 years</td></tr>
+              <tr data-path="doctorate"><td>Doctorate degree</td><td>Minimum 1 year</td></tr>
+              <tr data-path="none"><td>No degree pathway</td><td>Minimum 10 years</td></tr>
+            </tbody>
+          </table>
+          <p class="small" style="margin-top:12px">Regulatory-related experience may include quality assurance, quality control, clinical research related to the approval of health products, or health product project management. There are no required prerequisite courses or prior certifications.</p>
+          <p class="small">Source — <a href="https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html" target="_blank" rel="noopener">RAPS, “Is the Regulatory Affairs Certification right for you?”</a> and the 2026 Candidate Guides.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STAFF ============ -->
+  <section class="panel" id="view-staff" role="tabpanel" aria-labelledby="tab-staff">
+    <div class="kpis">
+      <div class="kpi"><b id="kpiTotal">0</b><span>Questions in queue</span></div>
+      <div class="kpi"><b id="kpiAnswered">0</b><span>Answered with a citation</span></div>
+      <div class="kpi"><b id="kpiHandoff">0</b><span>Handed off — no guess made</span></div>
+      <div class="kpi"><b id="kpiRate">—</b><span>Answered automatically</span></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h2>Incoming questions</h2>
+        <p>Questions you ask in the Member assistant appear here live. The three items marked “Demo inbox” show what a pilot queue looks like on a normal week. Each handoff includes a draft reply staff can edit and send.</p>
+        <div class="queue" id="queue"></div>
+      </div>
+      <div>
+        <div class="card">
+          <h2>Questions nobody could answer</h2>
+          <p style="font-size:14px">This is the most valuable report in a pilot. Each unanswered question is a gap in the published guides or FAQ — a page to write, not a model to blame.</p>
+          <div id="unansweredList"></div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h2>What staff do with a handoff</h2>
+          <p style="font-size:14px">1 &nbsp;Read the member's question and the auto-summary.<br>
+          2 &nbsp;Edit the draft reply — the assistant never sends it.<br>
+          3 &nbsp;If the same question recurs, add the answer to the source documents and the assistant picks it up on the next ingestion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTS ============ -->
+  <section class="panel" id="view-tests" role="tabpanel" aria-labelledby="tab-tests">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Scored test set</h2>
+        <p>Twelve fixed questions run against the same matching engine the assistant uses — not a canned score. Eight should be answered with a citation, four should be refused and handed off. Run it and inspect every result.</p>
+        <div class="score-hero" style="margin:16px 0">
+          <div class="score-ring" id="scoreRing" style="--p:0"><div class="score-inner"><div><b id="scoreNum">—</b><span>not run yet</span></div></div></div>
+          <div style="flex:1;min-width:220px">
+            <div id="scoreDetail"><p style="margin:0">No run yet. The score, citation coverage and correct-refusal rate will appear here.</p></div>
+            <button class="btn btn-primary" id="runTests" style="margin-top:12px">Run test set</button>
+          </div>
+        </div>
+        <div id="testList"></div>
+      </div>
+      <div>
+        <div class="card">
+          <h2>How scoring works</h2>
+          <p style="font-size:14px"><b>Pass — answered.</b> The question matched the expected guide section and returned a citation.</p>
+          <p style="font-size:14px"><b>Pass — refused.</b> The question is outside the guides, and the assistant refused and created a handoff instead of answering.</p>
+          <p style="font-size:14px"><b>Fail.</b> Either an in-scope question was refused, or an out-of-scope question was answered. Both are treated as equally serious in a credentialing context.</p>
+          <h3>Why a buyer cares</h3>
+          <p style="font-size:14px">A generic chatbot reports no score at all. A pilot on this model reports one number the association can inspect question by question, and re-runs it every time a guide is updated — so a guideline change that breaks old answers shows up here first.</p>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h2>What this demo does not do yet</h2>
+          <p style="font-size:14px">No member logins, no private documents, no live RAPS data feed. Those arrive with a paid pilot, scoped to one program. This build proves the trust layer — citations, eligibility logic, refusal and handoff, and measured accuracy — on public documents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>RAPS RAC Demo · Built on RAPS public Candidate Guides (2026) · RAC is a credential of the Regulatory Affairs Professionals Society (RAPS), Rockville, MD</span>
+    <span>Always confirm current fees, windows and deadlines at raps.org</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Knowledge base: grounded in RAPS public guides ---------- */
+  var RAPS_GUIDE = {doc:"RAPS — Is the Regulatory Affairs Certification right for you?", section:"raps.org RAC guide", url:"https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"};
+  var DEVICES_GUIDE = {doc:"RAC-Devices Candidate Guide 2026", section:"Eligibility Requirements, p. 6", url:"https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"};
+  var RECERT_GUIDE = {doc:"RAC Recertification Guide", section:"Recertification cycle & credits", url:"https://www.raps.org/asset/A7F6A07B%2DFD9E%2D4059%2DABE5B478A133035B/"};
+
+  var KB = [
+    {
+      id:"eligibility",
+      keywords:["eligible","eligibility","qualify","qualifies","requirement","requirements","degree","bachelor","master","doctorate","phd","years of experience","can i take","can i sit","am i eligible"],
+      answer:"<p>You are eligible when you meet <b>one</b> of these combinations in full:</p><ul><li><b>Bachelor's</b> or equivalent first degree + <b>3 years</b> of regulatory or regulatory-related experience</li><li><b>Master's</b> degree + <b>2 years</b></li><li><b>Doctorate</b> + <b>1 year</b></li><li>No-degree pathway + <b>10 years</b> of regulatory-related experience</li></ul><p>You attest to meeting the requirement in the application. Try the <b>Eligibility checker</b> tab for a personal result with the rule shown.</p>",
+      source:DEVICES_GUIDE, topic:"Eligibility combinations"
+    },
+    {
+      id:"related-exp",
+      keywords:["regulatory-related","related experience","quality assurance","quality control","qa","qc","clinical research","project management","counts as","what counts","experience count"],
+      answer:"<p>RAPS counts more than job titles with “regulatory” in them. <b>Regulatory-related experience</b> may include:</p><ul><li>Quality assurance</li><li>Quality control</li><li>Clinical research related to the approval of health products</li><li>Health product project management</li></ul><p>General work unrelated to healthcare products — general administration or sales, for example — is not described as qualifying in the guides.</p>",
+      source:RAPS_GUIDE, topic:"What counts as regulatory-related experience"
+    },
+    {
+      id:"drugs-vs-devices",
+      keywords:["drugs vs","devices vs","difference between","rac-drugs","rac devices","rac-devices","which exam","which credential","pharmaceutical","medical device","biologics","ivd"],
+      answer:"<p>There are <b>two RAC credentials</b>, and you pick the one that matches your product area:</p><ul><li><b>RAC-Drugs</b> — for professionals who work in pharmaceuticals, including biologics and biotechnology products</li><li><b>RAC-Devices</b> — for professionals who work in medical devices and in vitro diagnostics (IVDs)</li></ul><p>Both use the same eligibility combinations and the same exam format. The content differs by product lifecycle and regulations.</p>",
+      source:RAPS_GUIDE, topic:"RAC-Drugs vs RAC-Devices"
+    },
+    {
+      id:"exam-format",
+      keywords:["exam format","how many questions","how long is the exam","multiple choice","exam consist","test format","100 questions","two hours","recall","analysis questions"],
+      answer:"<p>Each RAC exam is <b>120 multiple-choice questions</b> to answer within a <b>two-and-a-half-hour</b> time limit, per the 2026 Candidate Guide. Questions come in three formats:</p><ul><li><b>Recall</b> — specific information about regulations and guidance</li><li><b>Application</b> — relating knowledge to a situation in regulatory practice</li><li><b>Analysis</b> — short case studies where you assemble information and evaluate solutions</li></ul><p>All exams are computer-based, taken at a testing center or online. Note — older RAPS web pages still describe a 100-question, two-hour exam; the 2026 Candidate Guide is the current source and this demo follows it.</p>",
+      source:{doc:"RAC-Devices Candidate Guide 2026", section:"Question Types & Key Exam Facts, pp. 4–5", url:"https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"}, topic:"Exam format — 120 questions, 2.5 hours"
+    },
+    {
+      id:"recert",
+      keywords:["recertif","renew","maintain","keep my","credits","36","expire","valid for","how long is it valid","continuing education"],
+      answer:"<p>The RAC is valid on a <b>three-year cycle</b>. To maintain it you must earn <b>36 recertification credits every three years</b> through continuing education and other professional activities — RAPS lists routes such as continuing education, public speaking, professional writing and involvement with professional organizations — or retake and pass the current exam. Holders commit to this ongoing education when they earn the credential.</p>",
+      source:RECERT_GUIDE, topic:"Recertification — 36 credits every 3 years"
+    },
+    {
+      id:"both-creds",
+      keywords:["both credentials","both rac","two credentials","drugs and devices","hold both","dual"],
+      answer:"<p>If you hold <b>both</b> RAC-Drugs and RAC-Devices, you do not double the burden. You submit <b>one recertification application with 36 credits</b> covering both credentials, on the cycle of the first credential earned.</p>",
+      source:RECERT_GUIDE, topic:"Recertifying with both credentials"
+    },
+    {
+      id:"geo",
+      keywords:["rac-us","rac us","rac-europe","rac-canada","rac-global","geographic","regional exam","us exam","europe exam","canada exam"],
+      answer:"<p>The older geographic designations — <b>RAC-US, RAC-Europe, RAC-Canada and RAC-Global</b> — are closed to new applicants. RAPS is not accepting new applications for them. People who already earned one of those credentials may continue to recertify it. New candidates apply for <b>RAC-Drugs</b> or <b>RAC-Devices</b>.</p>",
+      source:RAPS_GUIDE, topic:"Geographic designations discontinued for new applicants"
+    },
+    {
+      id:"vs-certificate",
+      keywords:["certificate program","certificate vs","online university","regulatory affairs certificate","difference from certificate"],
+      answer:"<p>The <b>RAC credential</b> and the RAPS <b>Regulatory Affairs Certificate</b> are different products. The RAC <b>validates</b> experience, knowledge and competency you already have, through examination. The Certificate programs from RAPS Online University <b>teach</b> — they build knowledge for people earlier in their careers. RAPS itself suggests a Certificate may be the better fit if you are not yet eligible for the RAC.</p>",
+      source:RAPS_GUIDE, topic:"RAC credential vs Certificate program"
+    },
+    {
+      id:"prep",
+      keywords:["prepare","study","how long to study","prep","preparation","study time","practice exam","study group"],
+      answer:"<p>Many RAC holders suggest about <b>six months of study time</b> — steady preparation, not around-the-clock studying. RAPS points candidates to the content outline in their Candidate Guide appendix to find gap areas, offers free RAC prep checklists and Prep Toolboxes with practice tests, and many candidates use the practice exam to decide where to spend study time. Study groups help some candidates and not others.</p>",
+      source:RAPS_GUIDE, topic:"Preparation — holders suggest ~6 months"
+    },
+    {
+      id:"windows",
+      keywords:["when is the exam","exam window","testing window","schedule","spring","summer","autumn","when can i take","how often"],
+      answer:"<p>RAC exams are offered in <b>three windows each year</b>. The 2026 Candidate Guide (Appendix F) lists:</p><ul><li><b>Spring 2026</b> — apply by Thu 12 Feb · testing Mon 23 Mar – Fri 24 Apr</li><li><b>Summer 2026</b> — apply by Thu 9 Jul · testing Tue 18 Aug – Fri 11 Sep</li><li><b>Autumn 2026</b> — apply by Thu 24 Sep · testing Mon 2 Nov – Fri 4 Dec</li></ul><p>Applications and payment must be received by 11:59 pm US Eastern on the deadline. Dates change by cycle, so confirm the next cycle at raps.org.</p>",
+      source:{doc:"RAC-Devices Candidate Guide 2026", section:"Appendix F — 2026 Application Deadlines and Testing Windows, p. 20", url:"https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"}, topic:"2026 testing windows and deadlines"
+    },
+    {
+      id:"fees",
+      keywords:["fee","fees","cost","price","how much","member price","nonmember","pay"],
+      answer:"<p>On the published <b>2026 schedule</b>, the RAC exam fee was <b>$605 for RAPS members and $760 for non-members</b>, and recertification was listed at $190 for members and $305 for non-members. Fees are set by RAPS and change between cycles, so confirm the current figure at raps.org before you apply — this demo does not treat a past fee as a current promise.</p>",
+      source:DEVICES_GUIDE, topic:"Fees — 2026 published schedule, verify current"
+    },
+    {
+      id:"retake",
+      keywords:["fail","retake","try again","attempts","pass rate","did not pass","re-exam","reexam"],
+      answer:"<p>If you do not pass, you may retake the exam in a <b>following testing window</b> by submitting a <b>new application and paying the full application fee</b>. RAPS does not publish a pass rate for the RAC, so any pass-rate figure you see elsewhere did not come from RAPS.</p>",
+      source:RAPS_GUIDE, topic:"Retake policy"
+    },
+    {
+      id:"what-is-rac",
+      keywords:["what is the rac","what is rac","about the rac","credential","ncca","accredited","only post-academic"],
+      answer:"<p>The <b>Regulatory Affairs Certification (RAC)</b> is the post-academic credential for regulatory professionals in the healthcare product sector, administered by the <b>Regulatory Affairs Professionals Society (RAPS)</b>. It is intended for people working in industry, consultancies, regulatory agencies and similar settings involved with the regulation of healthcare products, and it is accredited by the National Commission for Certifying Agencies (NCCA). Earning it demonstrates regulatory proficiency and a commitment to ongoing professional development.</p>",
+      source:RAPS_GUIDE, topic:"What the RAC is"
+    },
+    {
+      id:"no-prereq",
+      keywords:["prerequisite","prerequisites","course required","courses required","prior certification","need a course","take a course","a course before","course first"],
+      answer:"<p>There are <b>no prerequisites for specific courses or prior certifications</b> for the RAC. Eligibility rests on the degree-and-experience combinations only. Courses and Certificate programs can help you prepare, but none is required to apply.</p>",
+      source:DEVICES_GUIDE, topic:"No course or prior-certification prerequisites"
+    }
+  ];
+
+  function normalize(s){ return (s||"").toLowerCase().replace(/[^a-z0-9\s-]/g," ").replace(/\s+/g," ").trim(); }
+
+  function matchQuestion(raw){
+    // Guardrail: requests to write or complete application material for the
+    // member are never answered from the guides — always handed off.
+    var rawLow = (raw||"").toLowerCase();
+    if(/write my|draft my|compose my|fill out my/.test(rawLow) ||
+       /(write|draft|compose)[^.]{0,60}(statement|essay|cover letter|application)/.test(rawLow)){
+      return { entry:null, score:0 };
+    }
+    var q = " " + normalize(raw) + " ";
+    var best = null, bestScore = 0;
+    KB.forEach(function(entry){
+      var score = 0;
+      entry.keywords.forEach(function(kw){
+        var k = normalize(kw);
+        if(q.indexOf(" "+k+" ") !== -1 || q.indexOf(k) !== -1){ score += k.split(" ").length >= 2 ? 3 : 2; }
+      });
+      if(score > bestScore){ bestScore = score; best = entry; }
+    });
+    // Eligibility phrasing boost
+    if(/eligible|qualify|can i (take|sit)/.test(q) && bestScore < 3){ best = KB[0]; bestScore = 3; }
+    return { entry: bestScore >= 2 ? best : null, score: bestScore };
+  }
+
+  /* ---------- State ---------- */
+  var sessionLog = []; // {question, outcome: 'answered'|'handoff', topic}
+  var demoInbox = [
+    {question:"Can I recertify early if I finish my 36 credits in year two?", outcome:"answered", topic:"Recertification — 36 credits every 3 years", source:"RAC Recertification Guide", demo:true,
+     draft:"Hi — yes, you can submit once you have earned your 36 credits within your current three-year cycle. Your next cycle then runs from your recertification date. If you would like, I can confirm the exact dates on your record — just reply with your credential number."},
+    {question:"Does my time in a hospital pharmacy count toward RAC-Drugs eligibility?", outcome:"handoff", topic:"Unanswered — experience type not specified in guides", source:null, demo:true,
+     draft:"Hi — thanks for asking. The candidate guides name quality assurance, quality control, clinical research tied to product approval, and health product project management as regulatory-related experience, but they do not specifically address hospital pharmacy practice, so I do not want to guess on your eligibility. I have flagged this for our certification team, who will reply within two business days. If your role included formulary, investigational product, or submission-related work, adding a line on that will help them decide."},
+    {question:"My employer will pay for the exam. Can they pay RAPS directly?", outcome:"handoff", topic:"Unanswered — payment process not in guides", source:null, demo:true,
+     draft:"Hi — the candidate guides in this demo do not cover third-party or employer payment, so I have passed your question to the certification team rather than risk giving you the wrong process. They will confirm the accepted payment route and any invoice option."}
+  ];
+
+  /* ---------- Tabs ---------- */
+  var tabs = document.querySelectorAll(".tab");
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){
+      tabs.forEach(function(x){ x.setAttribute("aria-selected","false"); });
+      t.setAttribute("aria-selected","true");
+      document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
+      document.getElementById("view-"+t.getAttribute("data-view")).classList.add("active");
+      if(t.getAttribute("data-view")==="staff") renderStaff();
+    });
+  });
+  function goTo(view){
+    document.querySelector('.tab[data-view="'+view+'"]').click();
+  }
+
+  /* ---------- Assistant UI ---------- */
+  var suggestions = [
+    "Am I eligible for the RAC?",
+    "What counts as regulatory-related experience?",
+    "What is the difference between RAC-Drugs and RAC-Devices?",
+    "How many questions are on the exam?",
+    "How do I recertify?",
+    "Can I still apply for RAC-US?",
+    "How much does the exam cost?",
+    "What hotel is near the test center?"
+  ];
+  var chipsEl = document.getElementById("chips");
+  suggestions.forEach(function(s){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = s;
+    b.addEventListener("click", function(){ ask(s); });
+    chipsEl.appendChild(b);
+  });
+
+  var logEl = document.getElementById("log");
+  function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+  function ask(raw){
+    var q = (raw||"").trim();
+    if(!q) return;
+    var empty = document.getElementById("emptyState");
+    if(empty) empty.remove();
+    var qDiv = document.createElement("div");
+    qDiv.className = "msg-q"; qDiv.textContent = q;
+    logEl.appendChild(qDiv);
+
+    var res = matchQuestion(q);
+    var aDiv = document.createElement("div");
+    aDiv.className = "msg-a";
+    if(res.entry){
+      sessionLog.unshift({question:q, outcome:"answered", topic:res.entry.topic, source:res.entry.source.doc});
+      aDiv.innerHTML =
+        '<span class="conf conf-high">● Answered from source · High confidence</span>' +
+        '<div class="ans">'+res.entry.answer+'</div>' +
+        '<div class="cite"><div class="cite-icon">§</div><div><b>'+esc(res.entry.source.doc)+'</b><span>'+esc(res.entry.source.section)+' · Topic — '+esc(res.entry.topic)+'</span><a href="'+res.entry.source.url+'" target="_blank" rel="noopener">Read the source at RAPS ↗</a></div></div>';
+    } else {
+      sessionLog.unshift({question:q, outcome:"handoff", topic:"Unanswered — not covered in ingested guides", source:null});
+      aDiv.innerHTML =
+        '<span class="conf conf-refuse">● Not in the source documents · Handed off</span>' +
+        '<div class="ans"><p>I cannot answer that from the RAPS candidate guides in this demo, and I will not guess on a credentialing question. I have prepared a handoff for the certification team instead.</p></div>' +
+        '<div class="handoff"><b>Handoff summary for staff</b>' +
+        'Member asked — “'+esc(q)+'”<br>No matching section was found in the RAC-Devices Candidate Guide 2026, RAC-Drugs Candidate Guide 2026, RAPS RAC guide, or Recertification Guide. Suggested owner — RAPS certification team. A draft reply is waiting in the <a href="#" id="handoffLink">Staff view</a>.</div>';
+      setTimeout(function(){
+        var link = aDiv.querySelector("#handoffLink");
+        if(link) link.addEventListener("click", function(e){ e.preventDefault(); goTo("staff"); });
+      },0);
+    }
+    logEl.appendChild(aDiv);
+    aDiv.scrollIntoView({behavior:"smooth", block:"nearest"});
+    updateStaffBadge();
+  }
+
+  document.getElementById("askForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var input = document.getElementById("askInput");
+    ask(input.value);
+    input.value = "";
+  });
+
+  /* ---------- Eligibility checker ---------- */
+  var yearsEl = document.getElementById("years");
+  yearsEl.addEventListener("input", function(){ document.getElementById("yearsVal").textContent = yearsEl.value; });
+
+  var PATHS = {
+    bachelor:{label:"Bachelor's degree", need:3},
+    master:{label:"Master's degree", need:2},
+    doctorate:{label:"Doctorate degree", need:1},
+    none:{label:"No degree", need:10}
+  };
+  var RELATED = ["regulatory","qa","qc","clinical","pm"];
+
+  document.getElementById("eligForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var deg = document.getElementById("degree").value;
+    var years = parseFloat(yearsEl.value);
+    var cred = document.getElementById("cred").value;
+    var types = Array.prototype.map.call(document.querySelectorAll(".exp-type:checked"), function(c){ return c.value; });
+    var hasRelated = types.some(function(t){ return RELATED.indexOf(t)!==-1; });
+    var onlyOther = types.length>0 && !hasRelated;
+    var need = PATHS[deg].need;
+    var gap = Math.max(0, need - years);
+    var credName = cred==="devices" ? "RAC-Devices" : cred==="drugs" ? "RAC-Drugs" : "either RAC credential";
+
+    document.querySelectorAll("tr[data-path]").forEach(function(tr){
+      tr.classList.toggle("you", tr.getAttribute("data-path")===deg);
+    });
+
+    var cls, title, body;
+    if(onlyOther){
+      cls = "verdict-no"; title = "Not eligible on this experience type";
+      body = "<p>Your "+years+" year"+(years===1?"":"s")+" are not in a category the guides describe as regulatory or regulatory-related. The guides name regulatory affairs, quality assurance, quality control, clinical research tied to approval of health products, and health product project management. Experience outside those areas does not count toward the "+need+"-year requirement for the "+PATHS[deg].label.toLowerCase()+" path, however long it is.</p>";
+    } else if(!hasRelated && types.length===0){
+      cls = "verdict-close"; title = "Tell us what kind of experience it is";
+      body = "<p>The years alone are not enough to decide — the guides require the experience to be <b>regulatory or regulatory-related</b>. Select at least one experience type above and check again.</p>";
+    } else if(gap === 0){
+      cls = "verdict-yes"; title = "Eligible — you meet a full path";
+      body = "<p>With a <b>"+PATHS[deg].label.toLowerCase()+"</b> and <b>"+years+" years</b> of regulatory-related experience, you meet the requirement for <b>"+credName+"</b>. You will attest to this combination in the application. Keep documentation of your degree and roles in case RAPS reviews your application.</p>";
+    } else if(gap <= 1){
+      cls = "verdict-close"; title = "Close — not yet eligible";
+      body = "<p>On the <b>"+PATHS[deg].label.toLowerCase()+"</b> path you need <b>"+need+" years</b> and you have <b>"+years+"</b> — a gap of <b>"+gap+" year"+(gap===1?"":"s")+"</b>. You will be eligible once that experience is complete. In the meantime RAPS suggests its Regulatory Affairs Certificate programs as a way to build knowledge while you gain experience.</p>";
+    } else {
+      cls = "verdict-no"; title = "Not yet eligible";
+      body = "<p>On the <b>"+PATHS[deg].label.toLowerCase()+"</b> path you need <b>"+need+" years</b> of regulatory or regulatory-related experience and you have <b>"+years+"</b> — a gap of <b>"+gap+" years</b>. Check whether a different path fits you better in the table on this page, for example a master's degree lowers the requirement to 2 years.</p>";
+    }
+
+    document.getElementById("eligResult").innerHTML =
+      '<div class="verdict '+cls+'"><h3>'+title+'</h3>'+body+
+      '<div class="rulebox"><b>Rule applied</b>'+PATHS[deg].label+' + minimum '+need+' year'+(need===1?"":"s")+' of regulatory or regulatory-related work experience. Regulatory-related experience may include quality assurance, quality control, clinical research related to the approval of health products, or health product project management.'+
+      '<div style="margin-top:8px"><a href="https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html" target="_blank" rel="noopener">Source — RAPS RAC guide ↗</a> &nbsp;·&nbsp; <a href="https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf" target="_blank" rel="noopener">Candidate Guide 2026 (PDF) ↗</a></div></div></div>';
+    document.getElementById("eligResult").scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+
+  /* ---------- Staff view ---------- */
+  function allQueue(){
+    var live = sessionLog.map(function(s){
+      return {question:s.question, outcome:s.outcome, topic:s.topic, source:s.source, demo:false,
+        draft: s.outcome==="answered"
+          ? "Hi — thanks for your question. " + "This was answered automatically from the RAPS candidate guides ("+(s.topic||"cited section")+"), so no action is needed unless you would like a person to double-check it."
+          : "Hi — thanks for asking. The published candidate guides do not cover this, so I am answering personally rather than sending you an automated reply. I will follow up with a confirmed answer shortly."};
+    });
+    return live.concat(demoInbox);
+  }
+  function updateStaffBadge(){
+    var n = sessionLog.length;
+    document.getElementById("staffCount").textContent = n ? "("+n+" new)" : "";
+  }
+  function renderStaff(){
+    var q = allQueue();
+    var answered = q.filter(function(x){return x.outcome==="answered";}).length;
+    var handoff = q.length - answered;
+    document.getElementById("kpiTotal").textContent = q.length;
+    document.getElementById("kpiAnswered").textContent = answered;
+    document.getElementById("kpiHandoff").textContent = handoff;
+    document.getElementById("kpiRate").textContent = q.length ? Math.round(answered/q.length*100)+"%" : "—";
+
+    var queueEl = document.getElementById("queue");
+    queueEl.innerHTML = "";
+    if(!q.length){
+      queueEl.innerHTML = '<div class="empty">No questions yet. Ask something in the Member assistant and it will appear here.</div>';
+    }
+    q.forEach(function(item){
+      var div = document.createElement("div");
+      div.className = "qitem";
+      var status = item.outcome==="answered"
+        ? '<span class="status st-answered">Answered · cited</span>'
+        : '<span class="status st-handoff">Needs staff · no guess made</span>';
+      div.innerHTML =
+        '<div class="qitem-head"><h3>'+esc(item.question)+'</h3>'+status+'</div>'+
+        '<p><b>Topic —</b> '+esc(item.topic||"")+(item.source ? ' &nbsp;·&nbsp; <b>Source —</b> '+esc(item.source) : '')+'</p>'+
+        '<label class="small" style="font-weight:600">Draft reply — staff edits before sending</label>'+
+        '<textarea>'+esc(item.draft)+'</textarea>'+
+        '<div class="qmeta"><span>'+(item.demo ? "Demo inbox example" : "From this session · Member assistant")+'</span><span>Assistant never sends drafts automatically</span></div>';
+      queueEl.appendChild(div);
+    });
+
+    var un = q.filter(function(x){return x.outcome==="handoff";});
+    var unEl = document.getElementById("unansweredList");
+    if(!un.length){
+      unEl.innerHTML = '<p class="small">Nothing unanswered right now.</p>';
+    } else {
+      unEl.innerHTML = un.map(function(item){
+        return '<div class="doc"><div class="doc-num">?</div><div><b style="font-size:13.5px">'+esc(item.question)+'</b><span>'+esc(item.topic||"Not covered in ingested guides")+' — candidate for a new FAQ page</span></div></div>';
+      }).join("");
+    }
+  }
+
+  /* ---------- Test set ---------- */
+  var TESTS = [
+    {q:"Am I eligible with a bachelor's degree and 3 years of experience?", expect:"answer", id:"eligibility"},
+    {q:"Does quality assurance work count as experience?", expect:"answer", id:"related-exp"},
+    {q:"What is the difference between RAC-Drugs and RAC-Devices?", expect:"answer", id:"drugs-vs-devices"},
+    {q:"How many questions are on the exam and how long do I get?", expect:"answer", id:"exam-format"},
+    {q:"How many credits do I need to recertify?", expect:"answer", id:"recert"},
+    {q:"Can I still apply for the RAC-US exam?", expect:"answer", id:"geo"},
+    {q:"How long should I study before the exam?", expect:"answer", id:"prep"},
+    {q:"Do I need to take a course before I can apply?", expect:"answer", id:"no-prereq"},
+    {q:"What hotel should I book near the test center?", expect:"refuse", id:null},
+    {q:"Can you write my eligibility experience statement for me?", expect:"refuse", id:null},
+    {q:"What salary will I earn after getting the RAC?", expect:"refuse", id:null},
+    {q:"Who won the RAPS board election this year?", expect:"refuse", id:null}
+  ];
+  var testListEl = document.getElementById("testList");
+  function renderTests(results){
+    testListEl.innerHTML = "";
+    TESTS.forEach(function(t, i){
+      var r = results ? results[i] : null;
+      var row = document.createElement("div");
+      row.className = "test-row";
+      var icon = !r ? '<div class="test-ic ic-wait">'+(i+1)+'</div>'
+        : r.pass ? '<div class="test-ic ic-pass">✓</div>' : '<div class="test-ic ic-fail">✕</div>';
+      var detail = !r ? "Not run yet"
+        : r.pass
+          ? (t.expect==="answer" ? "Answered with citation — "+r.topic : "Correctly refused and handed off — no guess made")
+          : "Expected "+(t.expect==="answer" ? "an answer from "+t.id : "a refusal")+", got "+(r.got==="answer" ? "an answer" : "a refusal");
+      row.innerHTML = icon + '<div style="flex:1"><b>'+esc(t.q)+'</b><span>'+detail+'</span></div><span class="expect">'+(t.expect==="answer"?"Should answer":"Should refuse")+'</span>';
+      testListEl.appendChild(row);
+    });
+  }
+  renderTests(null);
+
+  document.getElementById("runTests").addEventListener("click", function(){
+    var btn = this; btn.disabled = true; btn.textContent = "Running…";
+    var results = TESTS.map(function(t){
+      var res = matchQuestion(t.q);
+      var got = res.entry ? "answer" : "refuse";
+      var pass = t.expect==="answer" ? (got==="answer" && res.entry.id===t.id) : (got==="refuse");
+      // Allow a near match on topic family for eligibility-style questions
+      if(t.expect==="answer" && got==="answer" && !pass && res.entry) pass = false;
+      return {pass:pass, got:got, topic: res.entry ? res.entry.topic : null};
+    });
+    var idx = 0;
+    var shown = TESTS.map(function(){ return null; });
+    var timer = setInterval(function(){
+      if(idx >= TESTS.length){
+        clearInterval(timer);
+        var passed = results.filter(function(r){return r.pass;}).length;
+        var pct = Math.round(passed/TESTS.length*100);
+        document.getElementById("scoreRing").style.setProperty("--p", pct);
+        document.getElementById("scoreNum").textContent = passed+"/"+TESTS.length;
+        document.querySelector(".score-inner span").textContent = pct+"% passed";
+        var answeredOk = results.filter(function(r,i){return TESTS[i].expect==="answer" && r.pass;}).length;
+        var refusedOk = results.filter(function(r,i){return TESTS[i].expect==="refuse" && r.pass;}).length;
+        document.getElementById("scoreDetail").innerHTML =
+          "<p style='margin:0'><b>"+passed+" of "+TESTS.length+" passed.</b> Citation coverage on in-scope questions — "+answeredOk+"/8 answered from the correct guide section. Correct refusals — "+refusedOk+"/4 out-of-scope questions handed off with no guess. Re-run this set after any guide update; a drop here is the first sign an answer went stale.</p>";
+        btn.disabled = false; btn.textContent = "Run test set again";
+        return;
+      }
+      shown[idx] = results[idx];
+      renderTests(shown.slice());
+      // renderTests expects full array with nulls — rebuild properly
+      var partial = TESTS.map(function(_,j){ return j<=idx ? results[j] : null; });
+      renderTests(partial);
+      idx++;
+    }, 160);
+  });
+
+  renderStaff();
+})();
+</script>
+</body>
+</html>

@@ -17,7 +17,24 @@ All credential facts come from the official 2026 RAC Candidate Guides. The exam 
 
 ## Run it
 
-Open `index.html` in a browser, or serve the folder with any static host. It also works as is on GitHub Pages.
+Open `index.html` in a browser, or serve the folder with any static host. It also works as is on GitHub Pages. In that static mode the assistant uses a built in deterministic matching engine over the guide content, with no model call.
+
+## LLM mode
+
+Run the small backend in `server/` and the same page switches to real LLM answers.
+
+```bash
+python3 server/server.py
+```
+
+Then open http://localhost:8787. The page posts each question to `/api/ask`. The server retrieves the most relevant chunks from `server/knowledge.json` (extracted from the same public guides), and the LLM answers using only those chunks, with the sources returned alongside. Questions with no matching source, and requests to write application material, return a staff handoff without calling the model. If the model is unreachable, the server falls back to the top source chunk so the demo still answers from source.
+
+Providers are set with environment variables.
+
+- `LLM_PROVIDER=ollama` (default) uses a local Ollama server, no API key. `LLM_MODEL` defaults to `llama3.2:3b`. This is the free, private way to run it.
+- `LLM_PROVIDER=openai` uses any OpenAI compatible chat API. Set `LLM_API_KEY`, and optionally `LLM_BASE_URL` and `LLM_MODEL` (default `gpt-4o-mini`).
+
+The API key, when used, lives only on the server. It is never sent to the browser.
 
 ## Why this exists
 

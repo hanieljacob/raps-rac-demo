@@ -1,0 +1,298 @@
+[
+ {
+  "id": "eligibility",
+  "topic": "Eligibility combinations",
+  "keywords": [
+   "eligible",
+   "eligibility",
+   "qualify",
+   "qualifies",
+   "requirement",
+   "requirements",
+   "degree",
+   "bachelor",
+   "master",
+   "doctorate",
+   "phd",
+   "years of experience",
+   "can i take",
+   "can i sit",
+   "am i eligible"
+  ],
+  "text": "You are eligible when you meet one of these combinations in full:\n\n- Bachelor's or equivalent first degree + 3 years of regulatory or regulatory-related experience\n- Master's degree + 2 years\n- Doctorate + 1 year\n- No-degree pathway + 10 years of regulatory-related experienceYou attest to meeting the requirement in the application. Try the Eligibility checker tab for a personal result with the rule shown.",
+  "source": {
+   "doc": "RAC-Devices Candidate Guide 2026",
+   "section": "Eligibility Requirements, p. 6",
+   "url": "https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"
+  }
+ },
+ {
+  "id": "related-exp",
+  "topic": "What counts as regulatory-related experience",
+  "keywords": [
+   "regulatory-related",
+   "related experience",
+   "quality assurance",
+   "quality control",
+   "qa",
+   "qc",
+   "clinical research",
+   "project management",
+   "counts as",
+   "what counts",
+   "experience count"
+  ],
+  "text": "RAPS counts more than job titles with “regulatory” in them. Regulatory-related experience may include:\n\n- Quality assurance\n- Quality control\n- Clinical research related to the approval of health products\n- Health product project managementGeneral work unrelated to healthcare products — general administration or sales, for example — is not described as qualifying in the guides.",
+  "source": {
+   "doc": "RAPS — Is the Regulatory Affairs Certification right for you?",
+   "section": "raps.org RAC guide",
+   "url": "https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"
+  }
+ },
+ {
+  "id": "drugs-vs-devices",
+  "topic": "RAC-Drugs vs RAC-Devices",
+  "keywords": [
+   "drugs vs",
+   "devices vs",
+   "difference between",
+   "rac-drugs",
+   "rac devices",
+   "rac-devices",
+   "which exam",
+   "which credential",
+   "pharmaceutical",
+   "medical device",
+   "biologics",
+   "ivd"
+  ],
+  "text": "There are two RAC credentials, and you pick the one that matches your product area:\n\n- RAC-Drugs — for professionals who work in pharmaceuticals, including biologics and biotechnology products\n- RAC-Devices — for professionals who work in medical devices and in vitro diagnostics (IVDs)Both use the same eligibility combinations and the same exam format. The content differs by product lifecycle and regulations.",
+  "source": {
+   "doc": "RAPS — Is the Regulatory Affairs Certification right for you?",
+   "section": "raps.org RAC guide",
+   "url": "https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"
+  }
+ },
+ {
+  "id": "exam-format",
+  "topic": "Exam format — 120 questions, 2.5 hours",
+  "keywords": [
+   "exam format",
+   "how many questions",
+   "how long is the exam",
+   "multiple choice",
+   "exam consist",
+   "test format",
+   "100 questions",
+   "two hours",
+   "recall",
+   "analysis questions"
+  ],
+  "text": "Each RAC exam is 120 multiple-choice questions to answer within a two-and-a-half-hour time limit, per the 2026 Candidate Guide. Questions come in three formats:\n\n- Recall — specific information about regulations and guidance\n- Application — relating knowledge to a situation in regulatory practice\n- Analysis — short case studies where you assemble information and evaluate solutionsAll exams are computer-based, taken at a testing center or online. Note — older RAPS web pages still describe a 100-question, two-hour exam; the 2026 Candidate Guide is the current source and this demo follows it.",
+  "source": {
+   "doc": "RAC-Devices Candidate Guide 2026",
+   "section": "Question Types & Key Exam Facts, pp. 4–5",
+   "url": "https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"
+  }
+ },
+ {
+  "id": "recert",
+  "topic": "Recertification — 36 credits every 3 years",
+  "keywords": [
+   "recertif",
+   "renew",
+   "maintain",
+   "keep my",
+   "credits",
+   "36",
+   "expire",
+   "valid for",
+   "how long is it valid",
+   "continuing education"
+  ],
+  "text": "The RAC is valid on a three-year cycle. To maintain it you must earn 36 recertification credits every three years through continuing education and other professional activities — RAPS lists routes such as continuing education, public speaking, professional writing and involvement with professional organizations — or retake and pass the current exam. Holders commit to this ongoing education when they earn the credential.",
+  "source": {
+   "doc": "RAC Recertification Guide",
+   "section": "Recertification cycle & credits",
+   "url": "https://www.raps.org/asset/A7F6A07B%2DFD9E%2D4059%2DABE5B478A133035B/"
+  }
+ },
+ {
+  "id": "both-creds",
+  "topic": "Recertifying with both credentials",
+  "keywords": [
+   "both credentials",
+   "both rac",
+   "two credentials",
+   "drugs and devices",
+   "hold both",
+   "dual"
+  ],
+  "text": "If you hold both RAC-Drugs and RAC-Devices, you do not double the burden. You submit one recertification application with 36 credits covering both credentials, on the cycle of the first credential earned.",
+  "source": {
+   "doc": "RAC Recertification Guide",
+   "section": "Recertification cycle & credits",
+   "url": "https://www.raps.org/asset/A7F6A07B%2DFD9E%2D4059%2DABE5B478A133035B/"
+  }
+ },
+ {
+  "id": "geo",
+  "topic": "Geographic designations discontinued for new applicants",
+  "keywords": [
+   "rac-us",
+   "rac us",
+   "rac-europe",
+   "rac-canada",
+   "rac-global",
+   "geographic",
+   "regional exam",
+   "us exam",
+   "europe exam",
+   "canada exam"
+  ],
+  "text": "The older geographic designations — RAC-US, RAC-Europe, RAC-Canada and RAC-Global — are closed to new applicants. RAPS is not accepting new applications for them. People who already earned one of those credentials may continue to recertify it. New candidates apply for RAC-Drugs or RAC-Devices.",
+  "source": {
+   "doc": "RAPS — Is the Regulatory Affairs Certification right for you?",
+   "section": "raps.org RAC guide",
+   "url": "https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"
+  }
+ },
+ {
+  "id": "vs-certificate",
+  "topic": "RAC credential vs Certificate program",
+  "keywords": [
+   "certificate program",
+   "certificate vs",
+   "online university",
+   "regulatory affairs certificate",
+   "difference from certificate"
+  ],
+  "text": "The RAC credential and the RAPS Regulatory Affairs Certificate are different products. The RAC validates experience, knowledge and competency you already have, through examination. The Certificate programs from RAPS Online University teach — they build knowledge for people earlier in their careers. RAPS itself suggests a Certificate may be the better fit if you are not yet eligible for the RAC.",
+  "source": {
+   "doc": "RAPS — Is the Regulatory Affairs Certification right for you?",
+   "section": "raps.org RAC guide",
+   "url": "https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"
+  }
+ },
+ {
+  "id": "prep",
+  "topic": "Preparation — holders suggest ~6 months",
+  "keywords": [
+   "prepare",
+   "study",
+   "how long to study",
+   "prep",
+   "preparation",
+   "study time",
+   "practice exam",
+   "study group"
+  ],
+  "text": "Many RAC holders suggest about six months of study time — steady preparation, not around-the-clock studying. RAPS points candidates to the content outline in their Candidate Guide appendix to find gap areas, offers free RAC prep checklists and Prep Toolboxes with practice tests, and many candidates use the practice exam to decide where to spend study time. Study groups help some candidates and not others.",
+  "source": {
+   "doc": "RAPS — Is the Regulatory Affairs Certification right for you?",
+   "section": "raps.org RAC guide",
+   "url": "https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"
+  }
+ },
+ {
+  "id": "windows",
+  "topic": "2026 testing windows and deadlines",
+  "keywords": [
+   "when is the exam",
+   "exam window",
+   "testing window",
+   "schedule",
+   "spring",
+   "summer",
+   "autumn",
+   "when can i take",
+   "how often"
+  ],
+  "text": "RAC exams are offered in three windows each year. The 2026 Candidate Guide (Appendix F) lists:\n\n- Spring 2026 — apply by Thu 12 Feb · testing Mon 23 Mar – Fri 24 Apr\n- Summer 2026 — apply by Thu 9 Jul · testing Tue 18 Aug – Fri 11 Sep\n- Autumn 2026 — apply by Thu 24 Sep · testing Mon 2 Nov – Fri 4 DecApplications and payment must be received by 11:59 pm US Eastern on the deadline. Dates change by cycle, so confirm the next cycle at raps.org.",
+  "source": {
+   "doc": "RAC-Devices Candidate Guide 2026",
+   "section": "Appendix F — 2026 Application Deadlines and Testing Windows, p. 20",
+   "url": "https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"
+  }
+ },
+ {
+  "id": "fees",
+  "topic": "Fees — 2026 published schedule, verify current",
+  "keywords": [
+   "fee",
+   "fees",
+   "cost",
+   "price",
+   "how much",
+   "member price",
+   "nonmember",
+   "pay"
+  ],
+  "text": "On the published 2026 schedule, the RAC exam fee was $605 for RAPS members and $760 for non-members, and recertification was listed at $190 for members and $305 for non-members. Fees are set by RAPS and change between cycles, so confirm the current figure at raps.org before you apply — this demo does not treat a past fee as a current promise.",
+  "source": {
+   "doc": "RAC-Devices Candidate Guide 2026",
+   "section": "Eligibility Requirements, p. 6",
+   "url": "https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"
+  }
+ },
+ {
+  "id": "retake",
+  "topic": "Retake policy",
+  "keywords": [
+   "fail",
+   "retake",
+   "try again",
+   "attempts",
+   "pass rate",
+   "did not pass",
+   "re-exam",
+   "reexam"
+  ],
+  "text": "If you do not pass, you may retake the exam in a following testing window by submitting a new application and paying the full application fee. RAPS does not publish a pass rate for the RAC, so any pass-rate figure you see elsewhere did not come from RAPS.",
+  "source": {
+   "doc": "RAPS — Is the Regulatory Affairs Certification right for you?",
+   "section": "raps.org RAC guide",
+   "url": "https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"
+  }
+ },
+ {
+  "id": "what-is-rac",
+  "topic": "What the RAC is",
+  "keywords": [
+   "what is the rac",
+   "what is rac",
+   "about the rac",
+   "credential",
+   "ncca",
+   "accredited",
+   "only post-academic"
+  ],
+  "text": "The Regulatory Affairs Certification (RAC) is the post-academic credential for regulatory professionals in the healthcare product sector, administered by the Regulatory Affairs Professionals Society (RAPS). It is intended for people working in industry, consultancies, regulatory agencies and similar settings involved with the regulation of healthcare products, and it is accredited by the National Commission for Certifying Agencies (NCCA). Earning it demonstrates regulatory proficiency and a commitment to ongoing professional development.",
+  "source": {
+   "doc": "RAPS — Is the Regulatory Affairs Certification right for you?",
+   "section": "raps.org RAC guide",
+   "url": "https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"
+  }
+ },
+ {
+  "id": "no-prereq",
+  "topic": "No course or prior-certification prerequisites",
+  "keywords": [
+   "prerequisite",
+   "prerequisites",
+   "course required",
+   "courses required",
+   "prior certification",
+   "need a course",
+   "take a course",
+   "a course before",
+   "course first"
+  ],
+  "text": "There are no prerequisites for specific courses or prior certifications for the RAC. Eligibility rests on the degree-and-experience combinations only. Courses and Certificate programs can help you prepare, but none is required to apply.",
+  "source": {
+   "doc": "RAC-Devices Candidate Guide 2026",
+   "section": "Eligibility Requirements, p. 6",
+   "url": "https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"
+  }
+ }
+]

@@ -39,6 +39,55 @@ API_KEY = os.environ.get("LLM_API_KEY", "")
 with open(KB_PATH, encoding="utf-8") as f:
     KB = json.load(f)
 
+# Documents added through POST /api/upload during this server run.
+UPLOADED = []
+
+STOPWORDS = set(
+    "the a an and or of to in for on with is are be by at from as it its this that "
+    "these those you your we our they their will would can could should may might "
+    "have has had not no yes if then than so such per via".split()
+)
+
+
+def chunk_document(name, text):
+    """Split an uploaded document into searchable chunks in the KB shape."""
+    text = (text or "").replace("\r\n", "\n").strip()
+    if not text:
+        return []
+    paragraphs = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
+    chunks, buf = [], ""
+    for p in paragraphs:
+        if len(buf) + len(p) + 1 > 1100 and buf:
+            chunks.append(buf)
+            buf = p
+        else:
+            buf = (buf + "\n\n" + p) if buf else p
+    if buf:
+        chunks.append(buf)
+    entries = []
+    for i, chunk in enumerate(chunks):
+        words = [w for w in normalize(chunk).split() if len(w) >= 4 and w not in STOPWORDS]
+        freq = {}
+        for w in words:
+            freq[w] = freq.get(w, 0) + 1
+        keywords = [w for w, _ in sorted(freq.items(), key=lambda t: -t[1])[:14]]
+        entries.append(
+            {
+                "id": f"upload-{len(UPLOADED) + len(entries) + 1}",
+                "topic": name,
+                "keywords": keywords,
+                "text": chunk,
+                "source": {"doc": name, "section": "Uploaded document", "url": ""},
+            }
+        )
+    return entries
+
+
+def add_document(name, text):
+    entries = chunk_document(name, text)
+    UPLOADED.extend(entries)
+    return {"ok": True, "chunks_added": len(entries), "uploaded_chunks_total": len(UPLOADED)}
+
 WRITE_FOR_ME = re.compile(
     r"write my|draft my|compose my|fill out my|"
     r"(write|draft|compose)[^.]{0,60}(statement|essay|cover letter|application)",
@@ -53,7 +102,7 @@ def normalize(s):
 def retrieve(question, top_n=3):
     q = " " + normalize(question) + " "
     scored = []
-    for entry in KB:
+    for entry in KB + UPLOADED:
         score = 0
         for kw in entry["keywords"]:
             k = normalize(kw)
@@ -157,13 +206,16 @@ class Handler(SimpleHTTPRequestHandler):
         super().__init__(*a, directory=ROOT, **kw)
 
     def do_POST(self):
-        if self.path != "/api/ask":
+        if self.path not in ("/api/ask", "/api/upload"):
             self.send_error(404)
             return
         try:
             length = int(self.headers.get("Content-Length", "0"))
             body = json.loads(self.rfile.read(length) or b"{}")
-            result = answer(str(body.get("question", "")))
+            if self.path == "/api/upload":
+                result = add_document(str(body.get("name", "Uploaded document"))[:120], str(body.get("text", "")))
+            else:
+                result = answer(str(body.get("question", "")))
             status = 200
         except Exception as e:
             result, status = {"outcome": "handoff", "reason": "server_error", "detail": str(e)[:200]}, 500

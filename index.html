@@ -1,107 +1,140 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
 <link rel="icon" href="data:," />
-<title>RAPS RAC Demo — Cited Assistant, Eligibility Checker &amp; Staff View</title>
+<title>Certification Support Center — RAPS RAC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f3f4f6;
+    --bg:#f7f8f9;
     --surface:#ffffff;
-    --surface-2:#eef1f4;
-    --surface-3:#e2e7ec;
-    --ink:#1a2433;
-    --ink-2:#45536a;
-    --ink-3:#6e7a8c;
-    --line:#d3d9e0;
-    --teal:#1f4e79;
-    --teal-dark:#173d5f;
-    --teal-soft:#e7edf3;
-    --navy:#14263f;
-    --amber:#8a5a00;
-    --amber-bg:#f7efdb;
-    --green:#1e6138;
-    --green-bg:#e6efe9;
-    --red:#93322c;
-    --red-bg:#f6e9e7;
-    --radius:6px;
-    --radius-sm:4px;
-    --shadow:0 1px 2px rgba(20,38,63,.05);
+    --surface-2:#f1f4f6;
+    --surface-3:#e6ebee;
+    --ink:#16232d;
+    --ink-2:#3e4f5c;
+    --ink-3:#6b7d89;
+    --line:#d7dee2;
+    --line-strong:#a9b8c0;
+    --brand:#10344e;
+    --brand-dark:#0a2436;
+    --on-brand:#ffffff;
+    --link:#0f4c7a;
+    --hdr:#0f2f4a;
+    --hdr-ink:#ffffff;
+    --hdr-ink-2:#c9d8e2;
+    --hdr-ink-3:#9db2c0;
+    --accent-red:#9e1b32;
+    --amber:#7d5200;
+    --amber-bg:#f8efdb;
+    --amber-line:#d3b96e;
+    --green:#1c5c34;
+    --green-bg:#e4efe7;
+    --green-line:#9dbfa9;
+    --red:#8c2b23;
+    --red-bg:#f7e9e6;
+    --red-line:#d3a49e;
+    --radius:3px;
+    --radius-sm:2px;
   }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#10151d;
-      --surface:#171e29;
-      --surface-2:#1e2735;
-      --surface-3:#28344a;
-      --ink:#e9edf2;
-      --ink-2:#b3bdcc;
-      --ink-3:#8b96a8;
-      --line:#2d394c;
-      --teal:#7aa7d4;
-      --teal-dark:#a9c6e6;
-      --teal-soft:#1d2f47;
-      --navy:#a8cbe8;
-      --amber:#f0b95a;
-      --amber-bg:#3a2c10;
-      --green:#6fd598;
-      --green-bg:#143626;
-      --red:#ff9a92;
-      --red-bg:#3d1d1a;
-      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
-    }
+  /* Dark theme — opt-in via the header control. Light is the default:
+     certification and association staff overwhelmingly work in light UIs. */
+  :root[data-theme="dark"]{
+    --bg:#0c1216;
+    --surface:#141e24;
+    --surface-2:#1a262d;
+    --surface-3:#26343c;
+    --ink:#e9edef;
+    --ink-2:#bcc8cd;
+    --ink-3:#8fa0a8;
+    --line:#2d3d45;
+    --line-strong:#485b64;
+    --brand:#8fc1e8;
+    --brand-dark:#b7d6f0;
+    --on-brand:#0a1d2c;
+    --link:#8fc1e8;
+    --amber:#eec27a;
+    --amber-bg:#38300f;
+    --amber-line:#6e5c1e;
+    --green:#7fc793;
+    --green-bg:#173325;
+    --green-line:#2f5c40;
+    --red:#eda198;
+    --red-bg:#3a201c;
+    --red-line:#6e3a34;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
   button,[role="button"],select,input,textarea{font:inherit}
   button,select,input[type="text"],input[type="number"]{min-height:44px}
-  a{color:var(--teal)}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 18px 56px}
+  a{color:var(--link)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px 56px}
 
-  /* Header */
-  .topbar{border-bottom:1px solid var(--line);background:var(--surface)}
-  .topbar-inner{max-width:1120px;margin:0 auto;padding:22px 18px 18px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
-  .brandline{display:flex;gap:14px;align-items:flex-start;max-width:680px}
-  .mark{width:46px;height:46px;border-radius:4px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;letter-spacing:.04em;flex:none}
-  @media (prefers-color-scheme: dark){.mark{background:var(--teal-soft);color:var(--teal-dark)}}
-  h1{font-size:clamp(23px,3.4vw,30px);line-height:1.15;margin:2px 0 6px;font-weight:700;letter-spacing:0}
-  .lede{margin:0;color:var(--ink-2);font-size:15.5px;max-width:62ch}
-  .source-note{margin-top:10px;font-size:13px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 14px}
-  .source-note a{font-weight:500}
-  .demo-badge{flex:none;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);padding:7px 11px;border-radius:4px;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+  /* Header — solid navy band, the way an association or enterprise vendor header reads */
+  .topbar{background:var(--hdr);border-bottom:3px solid var(--accent-red);color:var(--hdr-ink)}
+  .topbar-inner{max-width:1180px;margin:0 auto;padding:18px 18px 16px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
+  .brandline{display:flex;gap:14px;align-items:flex-start;max-width:760px}
+  .mark{width:44px;height:44px;border-radius:var(--radius);background:#ffffff;color:#0e2c42;display:grid;place-items:center;font-weight:700;font-size:14px;letter-spacing:.03em;flex:none;margin-top:2px}
+  h1{font-size:clamp(22px,3vw,27px);line-height:1.15;margin:0 0 5px;font-weight:700;letter-spacing:-.01em;color:var(--hdr-ink)}
+  .lede{margin:0;color:var(--hdr-ink-2);font-size:14.5px;max-width:66ch}
+  .workspace-bar{max-width:1180px;margin:0 auto;padding:10px 18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .crumbs{font-size:12.5px;color:var(--ink-3);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .crumbs b{color:var(--ink);font-weight:600}
+  .crumbs a{color:var(--ink-2);text-decoration:none}
+  .ws-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .ws-btn{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:var(--radius);padding:8px 13px;font-size:13px;font-weight:600;cursor:pointer;min-height:38px}
+  .ws-btn.primary{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+  .upload-strip{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--line);background:var(--surface-2);border-radius:var(--radius);padding:12px 14px;margin:14px 0 4px}
+  .upload-strip b{font-size:13.5px;display:block}
+  .upload-strip span{font-size:12.5px;color:var(--ink-2);display:block}
+  .source-note{margin-top:10px;font-size:12.5px;color:var(--hdr-ink-3);display:flex;flex-wrap:wrap;gap:4px 16px}
+  .source-note a{color:var(--hdr-ink);font-weight:500;text-decoration:underline;text-underline-offset:2px}
+  .hdr-controls{flex:none;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  @media(max-width:640px){.hdr-controls{align-items:flex-start}}
+  .status-line{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--hdr-ink-2);border:1px solid rgba(255,255,255,.5);padding:7px 11px;border-radius:var(--radius-sm);white-space:nowrap}
+  .status-line b{color:#7fc793}
+  /* Theme control */
+  .theme-ctl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--hdr-ink-2)}
+  .theme-seg{display:flex;border:1px solid rgba(255,255,255,.5);border-radius:var(--radius-sm);overflow:hidden}
+  .theme-seg button{border:0;background:transparent;color:var(--hdr-ink-2);padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;min-height:36px}
+  .theme-seg button[aria-pressed="true"]{background:#ffffff;color:#0e2c42}
+  .theme-seg button + button{border-left:1px solid rgba(255,255,255,.35)}
 
-  /* Stats strip */
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 4px}
-  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
-  .stat b{display:block;font-size:19px;line-height:1.15;font-weight:700}
-  .stat span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-2);line-height:1.4}
-  @media(max-width:720px){.stats{grid-template-columns:1fr 1fr}}
+  /* Key figures — one ruled strip, not four floating cards */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin:20px 0 6px}
+  .stat{padding:16px 18px;border-left:1px solid var(--line)}
+  .stat:first-child{border-left:0}
+  .stat b{display:block;font-size:20px;line-height:1.15;font-weight:700;letter-spacing:-.01em}
+  .stat span{display:block;margin-top:5px;font-size:12.5px;color:var(--ink-2);line-height:1.45}
+  @media(max-width:720px){
+    .stats{grid-template-columns:1fr 1fr}
+    .stat:nth-child(3){border-left:0}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}
+  }
 
-  /* Tabs */
-  .tabs{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 10px}
-  .tablist{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px;flex-wrap:wrap}
-  @media(max-width:640px){.tab{flex:1 1 42%}}
-  .tab{flex:1 0 auto;border:0;background:transparent;color:var(--ink-2);padding:10px 16px;border-radius:5px;font-weight:600;font-size:14px;cursor:pointer;min-height:44px;white-space:nowrap}
-  .tab[aria-selected="true"]{background:var(--navy);color:#fff}
-  @media (prefers-color-scheme: dark){.tab[aria-selected="true"]{background:var(--teal);color:#082a28}}
-  .tab:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  /* Tabs — underline toolbar */
+  .tabs{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 0}
+  .tablist{display:flex;gap:2px;border-bottom:1px solid var(--line-strong);flex-wrap:wrap}
+  .tab{flex:0 1 auto;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;background:transparent;color:var(--ink-2);padding:11px 18px;border-radius:0;font-weight:600;font-size:14px;cursor:pointer;min-height:44px;white-space:nowrap}
+  .tab:hover{color:var(--ink)}
+  .tab[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--brand)}
+  @media(max-width:640px){.tab{flex:1 1 42%;text-align:left;padding-left:10px}}
+  .tab:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--link);outline-offset:2px}
 
   .panel{display:none}
-  .panel.active{display:block;animation:fade .18s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion: reduce){.panel.active{animation:none} html{scroll-behavior:auto}}
+  .panel.active{display:block}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 
-  .grid-2{display:grid;grid-template-columns:1.55fr .95fr;gap:16px;align-items:start}
+  .grid-2{display:grid;grid-template-columns:1.55fr .95fr;gap:16px;align-items:start;margin-top:16px}
   @media(max-width:860px){.grid-2{grid-template-columns:1fr}}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
-  .card h2{font-size:18px;margin:0 0 6px;line-height:1.25;font-weight:700}
-  .card h3{font-size:15px;margin:18px 0 8px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+  .card h2{font-size:17px;font-weight:700;margin:0 0 12px;line-height:1.3;letter-spacing:-.005em;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .card h3{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin:20px 0 8px}
   .card p{color:var(--ink-2)}
   .card p:first-of-type{margin-top:0}
   .small{font-size:13px;color:var(--ink-3)}
@@ -109,105 +142,129 @@
 
   /* Assistant */
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
-  .chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:9px 13px;font-size:13.5px;font-weight:500;cursor:pointer;min-height:40px;text-align:left}
-  .chip:hover{border-color:var(--teal);color:var(--teal-dark)}
+  .chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:var(--radius);padding:9px 12px;font-size:13.5px;font-weight:500;cursor:pointer;min-height:40px;text-align:left}
+  .chip:hover{border-color:var(--line-strong);background:var(--surface-2)}
   .askrow{display:flex;gap:8px;margin-top:14px}
-  .askrow input{flex:1;border:1px solid var(--line);border-radius:6px;padding:11px 13px;background:var(--surface);color:var(--ink);min-width:0}
-  .btn{border:0;border-radius:6px;padding:11px 18px;font-weight:600;cursor:pointer;min-height:44px}
-  .btn-primary{background:var(--teal);color:#fff}
-  .btn-primary:hover{background:var(--teal-dark)}
-  @media (prefers-color-scheme: dark){.btn-primary{color:#06201e}}
-  .btn-ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
-  .btn-navy{background:var(--navy);color:#fff}
+  .askrow input{flex:1;border:1px solid var(--line-strong);border-radius:var(--radius);padding:11px 13px;background:var(--surface);color:var(--ink);min-width:0}
+  .btn{border:1px solid transparent;border-radius:var(--radius);padding:11px 18px;font-weight:600;cursor:pointer;min-height:44px}
+  .btn-primary{background:var(--brand);color:var(--on-brand)}
+  .btn-primary:hover{background:var(--brand-dark)}
+  .btn-ghost{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+  .btn-navy{background:var(--brand-dark);color:#fff}
+  :root[data-theme="dark"] .btn-navy{background:var(--surface-3);color:var(--ink);border-color:var(--line-strong)}
   .log{display:flex;flex-direction:column;gap:14px;margin-top:18px}
-  .msg-q{align-self:flex-end;max-width:88%;background:var(--navy);color:#fff;padding:11px 14px;border-radius:6px;font-size:14.5px}
-  @media (prefers-color-scheme: dark){.msg-q{background:var(--surface-3);color:var(--ink)}}
-  .msg-a{align-self:flex-start;max-width:96%;width:100%;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:6px;padding:15px 16px}
+  .msg-q{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;font-size:14.5px;font-weight:500}
+  .msg-q::before{content:"Member question";display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-bottom:4px}
+  .msg-a{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
   .msg-a .ans{font-size:14.5px}
   .msg-a .ans ul{margin:8px 0 8px 18px;padding:0}
   .msg-a .ans li{margin:4px 0}
-  .cite{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;display:flex;gap:10px;align-items:flex-start}
-  .cite-icon{width:28px;height:28px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);display:grid;place-items:center;font-size:13px;flex:none;font-weight:700}
+  .cite{margin-top:12px;border-top:1px solid var(--line);padding-top:11px;display:flex;gap:10px;align-items:flex-start}
+  .cite-icon{width:26px;height:26px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);display:grid;place-items:center;font-size:13px;flex:none;font-weight:700}
   .cite b{font-size:13px;display:block}
   .cite span{font-size:12.5px;color:var(--ink-2);display:block}
   .cite a{font-size:12.5px;font-weight:500}
-  .conf{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:0;margin-bottom:8px}
-  .conf-high{background:transparent;color:var(--green)}
-  .conf-refuse{background:transparent;color:var(--amber)}
-  .handoff{margin-top:12px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:var(--radius-sm);padding:12px 13px;font-size:13.5px}
+  .conf{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:4px 8px;border-radius:var(--radius-sm);border:1px solid;margin-bottom:10px}
+  .conf-high{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+  .conf-refuse{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+  .handoff{margin-top:12px;background:var(--amber-bg);border:1px solid var(--amber-line);border-radius:var(--radius);padding:12px 13px;font-size:13.5px}
   .handoff b{display:block;margin-bottom:4px}
-  .empty{border:1.5px dashed var(--line);border-radius:var(--radius);padding:22px;text-align:center;color:var(--ink-3);font-size:14px}
+  .empty{border:1px solid var(--line);background:var(--surface-2);border-radius:var(--radius);padding:20px;text-align:center;color:var(--ink-3);font-size:14px}
 
   /* Docs list */
   .doc{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
   .doc:last-child{border-bottom:0}
-  .doc-num{width:30px;height:30px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+  .doc-num{width:28px;height:28px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none;color:var(--ink-2)}
   .doc b{font-size:14px;display:block}
   .doc span{font-size:12.5px;color:var(--ink-2);display:block}
-  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:3px;background:var(--teal-soft);color:var(--teal-dark);margin-top:5px}
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-sm);background:transparent;border:1px solid var(--line-strong);color:var(--ink-2);margin-top:6px}
+  .pill-live{border-color:var(--green-line);color:var(--green);background:var(--green-bg)}
+
+  /* Upload / Documents */
+  .dropzone{border:1.5px dashed var(--line-strong);border-radius:var(--radius);background:var(--surface-2);padding:28px 20px;text-align:center;cursor:pointer}
+  .dropzone:hover,.dropzone.drag{border-color:var(--brand);background:var(--surface-3)}
+  .dropzone b{display:block;font-size:15.5px;margin-bottom:4px}
+  .dropzone span{font-size:13px;color:var(--ink-2);display:block}
+  .dropzone .dz-btn{display:inline-block;margin-top:12px}
+  .udoc{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .udoc:last-child{border-bottom:0}
+  .udoc-main{flex:1;min-width:0}
+  .udoc b{font-size:14px;display:block;overflow-wrap:anywhere}
+  .udoc span{font-size:12.5px;color:var(--ink-2);display:block}
+  .udoc-remove{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:var(--radius-sm);padding:6px 10px;font-size:12.5px;font-weight:600;cursor:pointer;min-height:36px}
+  .udoc-remove:hover{border-color:var(--red-line);color:var(--red)}
+  .upload-note{margin-top:12px;font-size:13px;color:var(--ink-2)}
 
   /* Eligibility */
   .field{margin-bottom:16px}
   .field label{display:block;font-weight:600;font-size:14px;margin-bottom:7px}
-  .field select,.field input[type="number"]{width:100%;border:1px solid var(--line);border-radius:6px;padding:11px 12px;background:var(--surface);color:var(--ink)}
+  .field select,.field input[type="number"]{width:100%;border:1px solid var(--line-strong);border-radius:var(--radius);padding:11px 12px;background:var(--surface);color:var(--ink)}
   .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   @media(max-width:520px){.checks{grid-template-columns:1fr}}
-  .check{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:6px;padding:11px 12px;cursor:pointer;min-height:44px}
-  .check input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--teal)}
+  .check{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--radius);padding:11px 12px;cursor:pointer;min-height:44px;background:var(--surface)}
+  .check:hover{border-color:var(--line-strong)}
+  .check input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--brand)}
   .check span{font-size:13.5px;line-height:1.4}
   .check span small{display:block;color:var(--ink-3);font-size:12px}
   .range-row{display:flex;align-items:center;gap:12px}
-  .range-row input[type="range"]{flex:1;accent-color:var(--teal);min-height:44px}
+  .range-row input[type="range"]{flex:1;accent-color:var(--brand);min-height:44px}
   .range-val{font-weight:700;font-size:18px;min-width:74px;text-align:right}
-  .verdict{border-radius:var(--radius);padding:18px;border:1px solid var(--line);background:var(--surface)}
-  .verdict-yes{border-left:4px solid var(--green)}
-  .verdict-no{border-left:4px solid var(--red)}
-  .verdict-close{border-left:4px solid var(--amber)}
-  .verdict h3{margin:0 0 6px;font-size:17px}
+  .verdict{border-radius:var(--radius);padding:18px;border:1px solid var(--line)}
+  .verdict-yes{background:var(--green-bg);border-color:var(--green-line)}
+  .verdict-no{background:var(--red-bg);border-color:var(--red-line)}
+  .verdict-close{background:var(--amber-bg);border-color:var(--amber-line)}
+  .verdict h3{margin:0 0 6px;font-size:16px;text-transform:none;letter-spacing:0;color:var(--ink)}
   .verdict p{margin:6px 0;color:var(--ink)}
-  .rulebox{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 14px;font-size:13.5px}
+  .rulebox{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px;font-size:13.5px}
   .rulebox b{display:block;margin-bottom:4px}
   table.paths{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
-  table.paths th,table.paths td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-  table.paths th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
-  tr.you td{background:var(--teal-soft);font-weight:600}
+  table.paths th,table.paths td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  table.paths th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);background:var(--surface-2);border-bottom:1px solid var(--line-strong)}
+  tr.you td{background:var(--surface-3);font-weight:600}
 
   /* Staff */
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-  @media(max-width:720px){.kpis{grid-template-columns:1fr 1fr}}
-  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
-  .kpi b{font-size:24px;display:block;line-height:1.1}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:16px;margin-top:16px}
+  .kpi{padding:15px 18px;border-left:1px solid var(--line)}
+  .kpi:first-child{border-left:0}
+  .kpi b{font-size:24px;display:block;line-height:1.1;font-weight:700}
   .kpi span{font-size:12.5px;color:var(--ink-2)}
+  @media(max-width:720px){
+    .kpis{grid-template-columns:1fr 1fr}
+    .kpi:nth-child(3){border-left:0}
+    .kpi:nth-child(1),.kpi:nth-child(2){border-bottom:1px solid var(--line)}
+  }
+  #view-staff .grid-2{margin-top:0}
   .queue{display:flex;flex-direction:column;gap:12px}
   .qitem{border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;background:var(--surface)}
   .qitem-head{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-  .qitem h3{margin:0;font-size:15px;flex:1;min-width:200px}
-  .status{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:3px;white-space:nowrap}
-  .st-answered{background:var(--green-bg);color:var(--green)}
-  .st-handoff{background:var(--amber-bg);color:var(--amber)}
-  .st-draft{background:var(--teal-soft);color:var(--teal-dark)}
+  .qitem h3{margin:0;font-size:15px;flex:1;min-width:200px;text-transform:none;letter-spacing:0;color:var(--ink)}
+  .status{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:var(--radius-sm);border:1px solid;white-space:nowrap}
+  .st-answered{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+  .st-handoff{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+  .st-draft{background:var(--surface-2);color:var(--ink-2);border-color:var(--line-strong)}
   .qitem p{font-size:13.5px;margin:8px 0}
-  .qitem textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:10px 11px;background:var(--surface-2);color:var(--ink);font-size:13.5px;resize:vertical;min-height:74px;margin-top:6px}
+  .qitem textarea{width:100%;border:1px solid var(--line);border-radius:var(--radius);padding:10px 11px;background:var(--surface-2);color:var(--ink);font-size:13.5px;resize:vertical;min-height:74px;margin-top:6px}
   .qmeta{font-size:12px;color:var(--ink-3);margin-top:8px;display:flex;flex-wrap:wrap;gap:4px 14px}
 
-  /* Tests */
-  .score-hero{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-  .score-ring{width:104px;height:104px;border-radius:6px;display:grid;place-items:center;flex:none;background:var(--navy)}
-  .score-ring inner{display:none}
-  .score-inner{width:82px;height:82px;display:grid;place-items:center;text-align:center}
-  .score-inner b{font-size:24px;line-height:1;display:block;color:#fff}
-  .score-inner span{font-size:10.5px;color:#c3d0e0;display:block;margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
+  /* Quality checks */
+  .score-hero{display:flex;gap:18px;flex-wrap:wrap;align-items:stretch}
+  .score-box{width:190px;flex:none;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2);padding:16px 18px}
+  .score-box b{font-size:32px;line-height:1;display:block;font-weight:700;letter-spacing:-.01em}
+  .score-box span{font-size:12px;color:var(--ink-2);display:block;margin-top:5px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+  .score-bar{height:6px;background:var(--surface-3);margin-top:12px;border-radius:1px;overflow:hidden}
+  .score-bar-fill{height:100%;width:0;background:var(--brand);transition:width .35s ease}
+  @media (prefers-reduced-motion: reduce){.score-bar-fill{transition:none}}
   .test-row{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
   .test-row:last-child{border-bottom:0}
-  .test-ic{width:28px;height:28px;border-radius:4px;display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;margin-top:1px}
-  .ic-pass{background:var(--green-bg);color:var(--green)}
-  .ic-fail{background:var(--red-bg);color:var(--red)}
-  .ic-wait{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--line)}
+  .test-ic{width:26px;height:26px;border-radius:var(--radius-sm);display:grid;place-items:center;font-size:12.5px;font-weight:700;flex:none;margin-top:1px;border:1px solid transparent}
+  .ic-pass{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+  .ic-fail{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+  .ic-wait{background:var(--surface-2);color:var(--ink-3);border-color:var(--line)}
   .test-row b{font-size:14px;display:block}
   .test-row span{font-size:12.5px;color:var(--ink-2);display:block}
-  .expect{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 7px;border-radius:3px;background:var(--surface-2);border:1px solid var(--line);white-space:nowrap;margin-top:3px}
+  .expect{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 7px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap;margin-top:3px}
 
-  footer{margin-top:28px;border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+  footer{margin-top:32px;border-top:1px solid var(--line-strong);padding-top:16px;font-size:12.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
@@ -218,19 +275,38 @@
     <div class="brandline">
       <div class="mark" aria-hidden="true">RAC</div>
       <div>
-        <h1>RAPS RAC Assistant</h1>
-        <p class="lede">Working demonstration for the Regulatory Affairs Certification (RAC). Answers are drawn only from RAPS public candidate guides, with the source shown on every answer. Includes an eligibility checker and a staff view for questions the system cannot answer.</p>
+        <h1>Certification Support Center</h1>
+        <p class="lede">Regulatory Affairs Certification (RAC) support for candidates and credential holders. Ask a question, add your own documents to the knowledge base, check eligibility, and route anything the sources don't cover to the certification team — every answer shows its source.</p>
         <div class="source-note">
-          <span>Sources ingested Nov 15, 2026</span>
+          <span>Sources connected Nov 15, 2026</span>
           <a href="https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html" target="_blank" rel="noopener">RAPS RAC guide</a>
-          <a href="https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf" target="_blank" rel="noopener">RAC-Devices Candidate Guide 2026 (PDF)</a>
-          <a href="https://www.raps.org/asset/A7F6A07B%2DFD9E%2D4059%2DABE5B478A133035B/" target="_blank" rel="noopener">RAC Recertification Guide</a>
+          <a href="https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf" target="_blank" rel="noopener">Candidate Guide 2026 (PDF)</a>
+          <a href="https://www.raps.org/asset/A7F6A07B%2DFD9E%2D4059%2DABE5B478A133035B/" target="_blank" rel="noopener">Recertification Guide</a>
         </div>
       </div>
     </div>
-    <div class="demo-badge">Demo · RAPS public documents only</div>
+    <div class="hdr-controls">
+      <div class="status-line"><b>●</b>&nbsp; Knowledge base active · <span id="kbCountHdr">4 sources</span></div>
+      <div class="theme-ctl">
+        <span id="themeLabel">Theme — light recommended</span>
+        <div class="theme-seg" role="group" aria-labelledby="themeLabel">
+          <button type="button" id="themeLight" aria-pressed="true">Light</button>
+          <button type="button" id="themeDark" aria-pressed="false">Dark</button>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
+
+<div style="background:var(--surface);border-bottom:1px solid var(--line)">
+  <div class="workspace-bar">
+    <nav class="crumbs" aria-label="Workspace"><span>RAPS</span><span aria-hidden="true">/</span><span>Certification</span><span aria-hidden="true">/</span><b>RAC Support Workspace</b><span aria-hidden="true">·</span><span>Healthcare &amp; life sciences associations</span></nav>
+    <div class="ws-actions">
+      <button type="button" class="ws-btn" id="wsUploadBtn">+ Add documents</button>
+      <button type="button" class="ws-btn primary" id="wsAskBtn">Ask a question</button>
+    </div>
+  </div>
+</div>
 
 <div class="wrap">
 
@@ -242,11 +318,12 @@
   </div>
 
   <div class="tabs">
-    <div class="tablist" role="tablist" aria-label="Demo views">
-      <button class="tab" role="tab" aria-selected="true" data-view="assistant" id="tab-assistant">Member assistant</button>
-      <button class="tab" role="tab" aria-selected="false" data-view="eligibility" id="tab-eligibility">Eligibility checker</button>
-      <button class="tab" role="tab" aria-selected="false" data-view="staff" id="tab-staff">Staff view <span id="staffCount"></span></button>
-      <button class="tab" role="tab" aria-selected="false" data-view="tests" id="tab-tests">Test set &amp; score</button>
+    <div class="tablist" role="tablist" aria-label="Product views">
+      <button class="tab" role="tab" aria-selected="true" data-view="assistant" id="tab-assistant">Support Assistant</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="documents" id="tab-documents">Knowledge Base <span id="docCount"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-view="eligibility" id="tab-eligibility">Eligibility</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="staff" id="tab-staff">Support Cases <span id="staffCount"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-view="tests" id="tab-tests">Coverage &amp; Insights</button>
     </div>
   </div>
 
@@ -254,8 +331,13 @@
   <section class="panel active" id="view-assistant" role="tabpanel" aria-labelledby="tab-assistant">
     <div class="grid-2">
       <div class="card">
-        <h2>Ask about the RAC</h2>
-        <p>Every answer is built from the documents listed on the right. If the guides do not cover a question, the assistant says so and prepares a handoff for staff instead of guessing.</p>
+        <h2>Support Assistant</h2>
+        <p>Ask in plain language. Answers come only from the connected sources on the right — the published RAPS guides plus documents your team adds to this workspace. If no source covers a question, it becomes a support case for the certification team instead of a guessed answer.</p>
+        <div class="upload-strip">
+          <div><b>Add your documents, then ask about them</b><span>Upload an FAQ, policy, handbook or bulletin — it joins the knowledge base for this workspace and answers cite it by name.</span></div>
+          <button type="button" class="btn btn-ghost" id="quickUploadBtn" style="flex:none">Upload documents</button>
+        </div>
+        <h3 style="margin-top:18px">Common questions</h3>
         <div class="chips" id="chips"></div>
         <form class="askrow" id="askForm">
           <label class="sr" for="askInput">Ask a question about the RAC</label>
@@ -263,33 +345,67 @@
           <button class="btn btn-primary" type="submit">Ask</button>
         </form>
         <div class="log" id="log" aria-live="polite">
-          <div class="empty" id="emptyState">Try a suggested question above, or type your own. Answers appear here with their source.</div>
+          <div class="empty" id="emptyState">No conversation yet. Choose a common question above or type your own — answers appear here with the source document and section.</div>
         </div>
       </div>
 
       <div>
         <div class="card">
-          <h2>Documents in this demo</h2>
-          <p class="small" style="margin-bottom:4px">The assistant can only cite what is in here. Anything outside this set triggers the handoff path.</p>
+          <h2>Connected sources</h2>
+          <p class="small" style="margin-bottom:4px">Only these sources can be cited. Manage them in the <a href="#" id="kbDocsLink">Knowledge Base</a> — add guides, policies and FAQs and they are answerable right away.</p>
           <div class="doc">
             <div class="doc-num">1</div>
-            <div><b>RAC-Devices Candidate Guide 2026</b><span>Eligibility, exam process, content outline — RAPS</span><span class="pill">Ingested</span></div>
+            <div><b>RAC-Devices Candidate Guide 2026</b><span>Eligibility, exam process, content outline — RAPS</span><span class="pill">Published source</span></div>
           </div>
           <div class="doc">
             <div class="doc-num">2</div>
-            <div><b>RAC-Drugs Candidate Guide 2026</b><span>Eligibility and exam process for the drugs credential — RAPS</span><span class="pill">Ingested</span></div>
+            <div><b>RAC-Drugs Candidate Guide 2026</b><span>Eligibility and exam process for the drugs credential — RAPS</span><span class="pill">Published source</span></div>
           </div>
           <div class="doc">
             <div class="doc-num">3</div>
-            <div><b>Is the RAC right for you? — RAPS guide</b><span>Credential overview, exam format, preparation guidance — raps.org</span><span class="pill">Ingested</span></div>
+            <div><b>Is the RAC right for you? — RAPS guide</b><span>Credential overview, exam format, preparation guidance — raps.org</span><span class="pill">Published source</span></div>
           </div>
           <div class="doc">
             <div class="doc-num">4</div>
-            <div><b>RAC Recertification Guide</b><span>36 credits, three-year cycle, multiple-credential rule — RAPS</span><span class="pill">Ingested</span></div>
+            <div><b>RAC Recertification Guide</b><span>36 credits, three-year cycle, multiple-credential rule — RAPS</span><span class="pill">Published source</span></div>
           </div>
-          <h3>How the guardrail works</h3>
-          <p style="font-size:14px">The assistant scores your question against the guide sections. A strong match returns an answer with a citation and a confidence label. A weak or no match returns a refusal, a plain-language summary of what you asked, and a draft for staff — visible in the Staff view tab.</p>
-          <p style="font-size:14px">Try asking something the guides do not cover, like <em>“What hotel is near the Rockville test center?”</em> or <em>“Can you write my experience statement for me?”</em></p>
+          <div id="kbUserDocs"></div>
+          <h3>How answers are sourced</h3>
+          <p style="font-size:14px">Each question is matched against the connected sources. A strong match returns an answer with a citation. No match creates a support case with a draft reply for staff to review in Support Cases — the assistant does not send it and does not fill gaps from general knowledge.</p>
+          <p style="font-size:14px">Requests to write application material, and questions outside the sources (for example travel or salary questions), are routed to staff the same way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOCUMENTS ============ -->
+  <section class="panel" id="view-documents" role="tabpanel" aria-labelledby="tab-documents">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Knowledge Base — Add documents</h2>
+        <p>Add the material members actually ask about — FAQs, internal policies, handbook chapters, candidate bulletins. Documents added here become part of this workspace's knowledge base, and the Support Assistant answers from them with the document name shown as the source.</p>
+        <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Upload documents">
+          <b>Drop files here, or choose files to upload</b>
+          <span>PDF, Word (.docx), and text files (.txt, .md, .csv, .json) are read right here in your browser — text is extracted, split into passages, and searchable by the assistant within seconds. Nothing leaves this device. Legacy .doc files can be registered; save them as .docx to make them searchable.</span>
+          <span class="dz-btn btn btn-primary">Choose files</span>
+        </div>
+        <input type="file" id="fileInput" multiple accept=".txt,.md,.markdown,.csv,.json,.pdf,.doc,.docx" class="sr" aria-label="Choose documents to upload" />
+        <p class="upload-note">In this workspace, files are held for the current session. Removing a document removes its content from the knowledge base immediately.</p>
+        <h3>Start from a template</h3>
+        <p style="font-size:14px">No document ready? Add the example deferral &amp; refund policy to the library, then ask the assistant about it to see how uploaded sources are cited.</p>
+        <button class="btn btn-ghost" type="button" id="loadSample">Add example policy — Exam deferral &amp; refund</button>
+      </div>
+      <div>
+        <div class="card">
+          <h2>Workspace library</h2>
+          <div id="userDocList">
+            <div class="empty">No team documents yet. Documents you add appear here and under Connected sources in the Support Assistant.</div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h2>Ask about your documents</h2>
+          <p style="font-size:14px">Once a document is indexed, go to the <a href="#" id="libAskLink">Support Assistant</a> and ask about it in plain language — for example, with the example policy added, <em>“How many days before my exam can I defer?”</em> or <em>“Can I get a refund if I withdraw?”</em> Answers cite your document by name, the same way guide answers cite RAPS.</p>
+          <p style="font-size:14px">If neither the guides nor your documents cover a question, it is routed to Support Cases for staff — never answered from general knowledge.</p>
         </div>
       </div>
     </div>
@@ -364,44 +480,44 @@
   <!-- ============ STAFF ============ -->
   <section class="panel" id="view-staff" role="tabpanel" aria-labelledby="tab-staff">
     <div class="kpis">
-      <div class="kpi"><b id="kpiTotal">0</b><span>Questions in queue</span></div>
+      <div class="kpi"><b id="kpiTotal">0</b><span>Total questions logged</span></div>
       <div class="kpi"><b id="kpiAnswered">0</b><span>Answered with a citation</span></div>
-      <div class="kpi"><b id="kpiHandoff">0</b><span>Handed off — no guess made</span></div>
-      <div class="kpi"><b id="kpiRate">—</b><span>Answered automatically</span></div>
+      <div class="kpi"><b id="kpiHandoff">0</b><span>Routed to staff as cases</span></div>
+      <div class="kpi"><b id="kpiRate">—</b><span>Resolved by assistant</span></div>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h2>Incoming questions</h2>
-        <p>Questions you ask in the Member assistant appear here live. The three items marked “Demo inbox” show what a pilot queue looks like on a normal week. Each handoff includes a draft reply staff can edit and send.</p>
+        <h2>Support Cases</h2>
+        <p>Every question asked in the Support Assistant is logged here. Answered questions show their source; routed questions include a draft reply for staff to edit and send.</p>
         <div class="queue" id="queue"></div>
       </div>
       <div>
         <div class="card">
-          <h2>Questions nobody could answer</h2>
-          <p style="font-size:14px">This is the most valuable report in a pilot. Each unanswered question is a gap in the published guides or FAQ — a page to write, not a model to blame.</p>
+          <h2>Unanswered — content gaps</h2>
+          <p style="font-size:14px">Questions with no matching source, grouped for the content team. Each one points to a guide page to clarify or a document to add to the Knowledge Base.</p>
           <div id="unansweredList"></div>
         </div>
         <div class="card" style="margin-top:16px">
-          <h2>What staff do with a handoff</h2>
-          <p style="font-size:14px">1 &nbsp;Read the member's question and the auto-summary.<br>
-          2 &nbsp;Edit the draft reply — the assistant never sends it.<br>
-          3 &nbsp;If the same question recurs, add the answer to the source documents and the assistant picks it up on the next ingestion.</p>
+          <h2>Working a case</h2>
+          <p style="font-size:14px">1 &nbsp;Review the member's question and the source check.<br>
+          2 &nbsp;Edit the draft reply — nothing is sent automatically.<br>
+          3 &nbsp;If the question recurs, add the answer to the Knowledge Base so the assistant can cite it next time.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ TESTS ============ -->
+  <!-- ============ QUALITY ============ -->
   <section class="panel" id="view-tests" role="tabpanel" aria-labelledby="tab-tests">
     <div class="grid-2">
       <div class="card">
-        <h2>Scored test set</h2>
-        <p>Twelve fixed questions run against the same matching engine the assistant uses — not a canned score. Eight should be answered with a citation, four should be refused and handed off. Run it and inspect every result.</p>
+        <h2>Coverage &amp; answer quality</h2>
+        <p>Ongoing checks for this workspace. Twelve representative member questions are run against the live knowledge base — eight should be answered with a citation, four should be routed to staff. Run after any guide update or document change and review each result.</p>
         <div class="score-hero" style="margin:16px 0">
-          <div class="score-ring" id="scoreRing" style="--p:0"><div class="score-inner"><div><b id="scoreNum">—</b><span>not run yet</span></div></div></div>
+          <div class="score-box"><b id="scoreNum">—</b><span id="scorePct">Not run yet</span><div class="score-bar" aria-hidden="true"><div class="score-bar-fill" id="scoreBarFill"></div></div></div>
           <div style="flex:1;min-width:220px">
             <div id="scoreDetail"><p style="margin:0">No run yet. The score, citation coverage and correct-refusal rate will appear here.</p></div>
-            <button class="btn btn-primary" id="runTests" style="margin-top:12px">Run test set</button>
+            <button class="btn btn-primary" id="runTests" style="margin-top:12px">Run coverage check</button>
           </div>
         </div>
         <div id="testList"></div>
@@ -410,28 +526,43 @@
         <div class="card">
           <h2>How scoring works</h2>
           <p style="font-size:14px"><b>Pass — answered.</b> The question matched the expected guide section and returned a citation.</p>
-          <p style="font-size:14px"><b>Pass — refused.</b> The question is outside the guides, and the assistant refused and created a handoff instead of answering.</p>
-          <p style="font-size:14px"><b>Fail.</b> Either an in-scope question was refused, or an out-of-scope question was answered. Both are treated as equally serious in a credentialing context.</p>
-          <h3>Why a buyer cares</h3>
-          <p style="font-size:14px">A generic chatbot reports no score at all. A pilot on this model reports one number the association can inspect question by question, and re-runs it every time a guide is updated — so a guideline change that breaks old answers shows up here first.</p>
+          <p style="font-size:14px"><b>Pass — routed.</b> The question is outside the sources, and the assistant created a support case instead of answering.</p>
+          <p style="font-size:14px"><b>Fail.</b> Either an in-scope question was routed unnecessarily, or an out-of-scope question was answered. Both are treated as equally serious in a credentialing context.</p>
+          <h3>Why it matters</h3>
+          <p style="font-size:14px">Coverage is re-checked whenever a guide is updated or a document is added, so a change that breaks an existing answer surfaces here before members see it.</p>
         </div>
         <div class="card" style="margin-top:16px">
-          <h2>What this demo does not do yet</h2>
-          <p style="font-size:14px">No member logins, no private documents, no live RAPS data feed. Those arrive with a paid pilot, scoped to one program. This build proves the trust layer — citations, eligibility logic, refusal and handoff, and measured accuracy — on public documents.</p>
+          <h2>Coverage in this workspace</h2>
+          <p style="font-size:14px">Connected sources cover the published RAC candidate guides and recertification guide, plus team documents in the Knowledge Base. Member accounts, application records and private case data are outside the assistant — questions about them route to Support Cases.</p>
         </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <span>RAPS RAC Demo · Built on RAPS public Candidate Guides (2026) · RAC is a credential of the Regulatory Affairs Professionals Society (RAPS), Rockville, MD</span>
-    <span>Always confirm current fees, windows and deadlines at raps.org</span>
+    <span>Certification Support Center · RAC is a credential of the Regulatory Affairs Professionals Society (RAPS), Rockville, MD · Sources — RAPS Candidate Guides 2026</span>
+    <span>Confirm current fees, windows and deadlines at raps.org</span>
   </footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script>
 (function(){
   "use strict";
+
+  /* ---------- Theme: light default, dark opt-in (this session only) ---------- */
+  var rootEl = document.documentElement;
+  var lightBtn = document.getElementById("themeLight");
+  var darkBtn = document.getElementById("themeDark");
+  function setTheme(t){
+    rootEl.setAttribute("data-theme", t);
+    lightBtn.setAttribute("aria-pressed", t==="light" ? "true" : "false");
+    darkBtn.setAttribute("aria-pressed", t==="dark" ? "true" : "false");
+  }
+  lightBtn.addEventListener("click", function(){ setTheme("light"); });
+  darkBtn.addEventListener("click", function(){ setTheme("dark"); });
+  setTheme("light");
 
   /* ---------- Knowledge base: grounded in RAPS public guides ---------- */
   var RAPS_GUIDE = {doc:"RAPS — Is the Regulatory Affairs Certification right for you?", section:"raps.org RAC guide", url:"https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html"};
@@ -460,7 +591,7 @@
     {
       id:"exam-format",
       keywords:["exam format","how many questions","how long is the exam","multiple choice","exam consist","test format","100 questions","two hours","recall","analysis questions"],
-      answer:"<p>Each RAC exam is <b>120 multiple-choice questions</b> to answer within a <b>two-and-a-half-hour</b> time limit, per the 2026 Candidate Guide. Questions come in three formats:</p><ul><li><b>Recall</b> — specific information about regulations and guidance</li><li><b>Application</b> — relating knowledge to a situation in regulatory practice</li><li><b>Analysis</b> — short case studies where you assemble information and evaluate solutions</li></ul><p>All exams are computer-based, taken at a testing center or online. Note — older RAPS web pages still describe a 100-question, two-hour exam; the 2026 Candidate Guide is the current source and this demo follows it.</p>",
+      answer:"<p>Each RAC exam is <b>120 multiple-choice questions</b> to answer within a <b>two-and-a-half-hour</b> time limit, per the 2026 Candidate Guide. Questions come in three formats:</p><ul><li><b>Recall</b> — specific information about regulations and guidance</li><li><b>Application</b> — relating knowledge to a situation in regulatory practice</li><li><b>Analysis</b> — short case studies where you assemble information and evaluate solutions</li></ul><p>All exams are computer-based, taken at a testing center or online. Note — older RAPS web pages still describe a 100-question, two-hour exam; the 2026 Candidate Guide is the current source and this knowledge base follows it.</p>",
       source:{doc:"RAC-Devices Candidate Guide 2026", section:"Question Types & Key Exam Facts, pp. 4–5", url:"https://www.raps.org/static/512d34ab-d3c1-4ef2-8ce004c79c3602ea/2026-RAC-Devices-Candidate-Guide.pdf"}, topic:"Exam format — 120 questions, 2.5 hours"
     },
     {
@@ -502,7 +633,7 @@
     {
       id:"fees",
       keywords:["fee","fees","cost","price","how much","member price","nonmember","pay"],
-      answer:"<p>On the published <b>2026 schedule</b>, the RAC exam fee was <b>$605 for RAPS members and $760 for non-members</b>, and recertification was listed at $190 for members and $305 for non-members. Fees are set by RAPS and change between cycles, so confirm the current figure at raps.org before you apply — this demo does not treat a past fee as a current promise.</p>",
+      answer:"<p>On the published <b>2026 schedule</b>, the RAC exam fee was <b>$605 for RAPS members and $760 for non-members</b>, and recertification was listed at $190 for members and $305 for non-members. Fees are set by RAPS and change between cycles, so confirm the current figure at raps.org before you apply — a past fee is not treated here as a current promise.</p>",
       source:DEVICES_GUIDE, topic:"Fees — 2026 published schedule, verify current"
     },
     {
@@ -550,15 +681,233 @@
     return { entry: bestScore >= 2 ? best : null, score: bestScore };
   }
 
+  /* ---------- Uploaded documents ---------- */
+  var userDocs = []; // {id, name, size, searchable, chunks:[text], note}
+  var docSeq = 0;
+  var STOP = {"what":1,"when":1,"does":1,"have":1,"with":1,"from":1,"this":1,"that":1,"your":1,"about":1,"there":1,"their":1,"would":1,"could":1,"should":1,"which":1,"where":1,"while":1,"after":1,"before":1,"under":1,"being":1,"been":1,"were":1,"will":1,"shall":1,"into":1,"than":1,"then":1,"them":1,"they":1,"each":1,"must":1,"only":1,"also":1,"upon":1,"within":1,"days":0};
+
+  function chunkText(text){
+    var paras = (text||"").split(/\n\s*\n/).map(function(p){ return p.replace(/\s+/g," ").trim(); }).filter(function(p){ return p.length > 0; });
+    var chunks = [], cur = "";
+    paras.forEach(function(p){
+      if(cur && (cur.length + p.length + 1) > 700){ chunks.push(cur); cur = p; }
+      else { cur = cur ? cur + "\n" + p : p; }
+    });
+    if(cur) chunks.push(cur);
+    if(!chunks.length && text.trim()) chunks.push(text.replace(/\s+/g," ").trim().slice(0, 4000));
+    return chunks;
+  }
+
+  function matchUploaded(raw){
+    if(!userDocs.length) return null;
+    var words = normalize(raw).split(" ").filter(function(w){ return w.length >= 4 && !STOP[w]; });
+    if(!words.length) return null;
+    var best = null, bestScore = 0;
+    userDocs.forEach(function(d){
+      if(!d.searchable) return;
+      d.chunks.forEach(function(chunk, ci){
+        var low = " " + normalize(chunk) + " ";
+        var score = 0, hits = 0;
+        words.forEach(function(w){
+          var idx = low.indexOf(" " + w), count = 0;
+          while(idx !== -1){ count++; idx = low.indexOf(" " + w, idx + 1); if(count > 4) break; }
+          if(count > 0){ hits++; score += Math.min(count, 3); }
+        });
+        // Require at least two distinct question terms to match a passage
+        var eff = hits >= 2 ? score : 0;
+        if(eff > bestScore){ bestScore = eff; best = {doc:d, chunk:chunk, chunkIdx:ci, score:eff}; }
+      });
+    });
+    return bestScore >= 3 ? best : null;
+  }
+
+  function fmtSize(bytes){
+    if(bytes == null) return "";
+    if(bytes < 1024) return bytes + " B";
+    if(bytes < 1024*1024) return Math.round(bytes/1024) + " KB";
+    return (bytes/(1024*1024)).toFixed(1) + " MB";
+  }
+
+  function syncUpload(name, text){
+    try{
+      fetch("/api/upload", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({name:name, text:text})}).catch(function(){});
+    }catch(e){}
+  }
+
+  function addUserDoc(name, size, text, note, status){
+    docSeq++;
+    var searchable = typeof text === "string" && text.trim().length > 0;
+    var d = { id: docSeq, name: name, size: size, searchable: searchable,
+              chunks: searchable ? chunkText(text) : [], note: note || "",
+              status: status || (searchable ? "indexed" : "pending") };
+    userDocs.push(d);
+    if(d.searchable) syncUpload(name, text);
+    renderUserDocs();
+    return d;
+  }
+
+  function updateUserDoc(id, text, note, status){
+    for(var i = 0; i < userDocs.length; i++){
+      if(userDocs[i].id === id){
+        var searchable = typeof text === "string" && text.trim().length > 0;
+        userDocs[i].searchable = searchable;
+        userDocs[i].chunks = searchable ? chunkText(text) : [];
+        if(note) userDocs[i].note = note;
+        userDocs[i].status = status || (searchable ? "indexed" : "pending");
+        if(searchable) syncUpload(userDocs[i].name, text);
+        break;
+      }
+    }
+    renderUserDocs();
+  }
+
+  function removeUserDoc(id){
+    userDocs = userDocs.filter(function(d){ return d.id !== id; });
+    renderUserDocs();
+  }
+
+  function renderUserDocs(){
+    var listEl = document.getElementById("userDocList");
+    var kbEl = document.getElementById("kbUserDocs");
+    document.getElementById("docCount").textContent = userDocs.length ? "("+userDocs.length+")" : "";
+    document.getElementById("kbCountHdr").textContent = (4 + userDocs.length) + " sources";
+    if(!userDocs.length){
+      listEl.innerHTML = '<div class="empty">No documents uploaded yet. Uploaded documents appear here and in the assistant\'s knowledge base.</div>';
+      kbEl.innerHTML = "";
+      return;
+    }
+    listEl.innerHTML = "";
+    userDocs.forEach(function(d){
+      var row = document.createElement("div");
+      row.className = "udoc";
+      var status = d.status === "indexing"
+        ? '<span class="pill">Extracting text…</span>'
+        : d.searchable
+        ? '<span class="pill pill-live">Indexed · searchable</span>'
+        : '<span class="pill">Registered · not searchable</span>';
+      var detail = d.status === "indexing"
+        ? "Reading file and extracting text in your browser…"
+        : d.searchable
+        ? d.chunks.length+" passage"+(d.chunks.length===1?"":"s")+" indexed"
+        : "No readable text extracted — the assistant cannot cite this file yet";
+      row.innerHTML =
+        '<div class="doc-num">≡</div>' +
+        '<div class="udoc-main"><b>'+esc(d.name)+'</b>' +
+        '<span>'+(fmtSize(d.size) ? fmtSize(d.size)+" · " : "")+detail+(d.note ? " · "+esc(d.note) : "")+'</span>' +
+        status + '</div>';
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "udoc-remove"; btn.textContent = "Remove";
+      btn.addEventListener("click", function(){ removeUserDoc(d.id); });
+      row.appendChild(btn);
+      listEl.appendChild(row);
+    });
+    kbEl.innerHTML = userDocs.map(function(d, i){
+      var sub = d.status === "indexing" ? " · extracting text…" : d.searchable ? " · "+d.chunks.length+" passages indexed" : " · not searchable yet";
+      return '<div class="doc"><div class="doc-num">'+(5+i)+'</div><div><b>'+esc(d.name)+'</b><span>Uploaded by your team'+sub+'</span><span class="pill'+(d.searchable ? " pill-live" : "")+'">'+(d.searchable ? "Your document · live" : "Your document")+'</span></div></div>';
+    }).join("");
+  }
+
+  var TEXT_EXT = /\.(txt|md|markdown|csv|json)$/i;
+  var PDF_EXT = /\.pdf$/i;
+  var DOCX_EXT = /\.docx$/i;
+
+  function extractPdfText(arrayBuffer){
+    if(typeof pdfjsLib === "undefined") return Promise.reject(new Error("PDF reader unavailable"));
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    return pdfjsLib.getDocument({data: arrayBuffer}).promise.then(function(pdf){
+      var pages = [];
+      for(var p = 1; p <= pdf.numPages; p++){ pages.push(p); }
+      var chain = Promise.resolve("");
+      pages.forEach(function(pnum){
+        chain = chain.then(function(acc){
+          return pdf.getPage(pnum).then(function(page){
+            return page.getTextContent();
+          }).then(function(tc){
+            var lines = tc.items.map(function(it){ return it.str; }).join(" ");
+            return acc + "\n\n" + lines;
+          });
+        });
+      });
+      return chain;
+    });
+  }
+
+  function extractDocxText(arrayBuffer){
+    if(typeof mammoth === "undefined") return Promise.reject(new Error("Word reader unavailable"));
+    return mammoth.extractRawText({arrayBuffer: arrayBuffer}).then(function(res){ return res.value || ""; });
+  }
+
+  function handleFiles(fileList){
+    Array.prototype.forEach.call(fileList, function(file){
+      if(TEXT_EXT.test(file.name) || (file.type && file.type.indexOf("text/") === 0 && !PDF_EXT.test(file.name) && !DOCX_EXT.test(file.name))){
+        var reader = new FileReader();
+        reader.onload = function(){
+          addUserDoc(file.name, file.size, String(reader.result || ""), "Uploaded just now");
+        };
+        reader.onerror = function(){ addUserDoc(file.name, file.size, null, "Could not be read"); };
+        reader.readAsText(file);
+      } else if(PDF_EXT.test(file.name) || DOCX_EXT.test(file.name)){
+        var placeholder = addUserDoc(file.name, file.size, null, "Uploaded just now", "indexing");
+        var isPdf = PDF_EXT.test(file.name);
+        var bufReader = new FileReader();
+        bufReader.onload = function(){
+          var extract = isPdf ? extractPdfText(bufReader.result) : extractDocxText(bufReader.result);
+          extract.then(function(text){
+            if(text && text.trim().length > 0){
+              updateUserDoc(placeholder.id, text, isPdf ? "PDF text extracted in browser" : "Word text extracted in browser", "indexed");
+            } else {
+              updateUserDoc(placeholder.id, null, isPdf ? "No selectable text found — the PDF may be scanned images" : "No text found in document", "pending");
+            }
+          }).catch(function(){
+            updateUserDoc(placeholder.id, null, "Text extraction failed — try saving as .txt or .docx", "pending");
+          });
+        };
+        bufReader.onerror = function(){ updateUserDoc(placeholder.id, null, "Could not be read", "pending"); };
+        bufReader.readAsArrayBuffer(file);
+      } else {
+        addUserDoc(file.name, file.size, null, "Uploaded just now — save as .docx, PDF or text to make it searchable");
+      }
+    });
+  }
+
+  var dropzone = document.getElementById("dropzone");
+  var fileInput = document.getElementById("fileInput");
+  dropzone.addEventListener("click", function(){ fileInput.click(); });
+  dropzone.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); fileInput.click(); } });
+  ["dragenter","dragover"].forEach(function(ev){ dropzone.addEventListener(ev, function(e){ e.preventDefault(); dropzone.classList.add("drag"); }); });
+  ["dragleave","drop"].forEach(function(ev){ dropzone.addEventListener(ev, function(e){ e.preventDefault(); dropzone.classList.remove("drag"); }); });
+  dropzone.addEventListener("drop", function(e){ if(e.dataTransfer && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
+  fileInput.addEventListener("change", function(){ if(fileInput.files.length) handleFiles(fileInput.files); fileInput.value = ""; });
+
+  var SAMPLE_DOC = [
+    "Exam Deferral and Refund Policy — Internal Candidate Policy (example document)",
+
+    "",
+    "Deferrals. A candidate may defer their exam to the next testing window in the same calendar year if they request the deferral at least 14 calendar days before the first day of their scheduled testing window. Only one deferral is permitted per application. Deferral requests made fewer than 14 days before the window opens cannot be accommodated, except in a documented medical emergency.",
+    "",
+    "Refunds. A candidate who withdraws their application at least 30 calendar days before their testing window opens receives a refund of the exam fee minus a $75 processing charge. Withdrawals made fewer than 30 days before the window opens are not refundable. Recertification fees are not refundable once a recertification application has been submitted.",
+    "",
+    "How to request. Deferral and withdrawal requests must be submitted in writing through the candidate portal at least 5 business days before any deadline in this policy takes effect. Verbal requests to support staff cannot be processed."
+  ].join("\n");
+
+  document.getElementById("loadSample").addEventListener("click", function(){
+    var exists = userDocs.some(function(d){ return d.name === "Exam deferral and refund policy.txt"; });
+    if(!exists) addUserDoc("Exam deferral and refund policy.txt", SAMPLE_DOC.length, SAMPLE_DOC, "Example document");
+    goTo("assistant");
+    var input = document.getElementById("askInput");
+    input.value = "How many days before my exam can I defer, and can I get a refund if I withdraw?";
+    input.focus();
+  });
+
   /* ---------- State ---------- */
   var sessionLog = []; // {question, outcome: 'answered'|'handoff', topic}
-  var demoInbox = [
-    {question:"Can I recertify early if I finish my 36 credits in year two?", outcome:"answered", topic:"Recertification — 36 credits every 3 years", source:"RAC Recertification Guide", demo:true,
+  var seedQueue = [
+    {question:"Can I recertify early if I finish my 36 credits in year two?", outcome:"answered", topic:"Recertification — 36 credits every 3 years", source:"RAC Recertification Guide", seed:true,
      draft:"Hi — yes, you can submit once you have earned your 36 credits within your current three-year cycle. Your next cycle then runs from your recertification date. If you would like, I can confirm the exact dates on your record — just reply with your credential number."},
-    {question:"Does my time in a hospital pharmacy count toward RAC-Drugs eligibility?", outcome:"handoff", topic:"Unanswered — experience type not specified in guides", source:null, demo:true,
+    {question:"Does my time in a hospital pharmacy count toward RAC-Drugs eligibility?", outcome:"handoff", topic:"Unanswered — experience type not specified in guides", source:null, seed:true,
      draft:"Hi — thanks for asking. The candidate guides name quality assurance, quality control, clinical research tied to product approval, and health product project management as regulatory-related experience, but they do not specifically address hospital pharmacy practice, so I do not want to guess on your eligibility. I have flagged this for our certification team, who will reply within two business days. If your role included formulary, investigational product, or submission-related work, adding a line on that will help them decide."},
-    {question:"My employer will pay for the exam. Can they pay RAPS directly?", outcome:"handoff", topic:"Unanswered — payment process not in guides", source:null, demo:true,
-     draft:"Hi — the candidate guides in this demo do not cover third-party or employer payment, so I have passed your question to the certification team rather than risk giving you the wrong process. They will confirm the accepted payment route and any invoice option."}
+    {question:"My employer will pay for the exam. Can they pay RAPS directly?", outcome:"handoff", topic:"Unanswered — payment process not in guides", source:null, seed:true,
+     draft:"Hi — the candidate guides do not cover third-party or employer payment, so I have passed your question to the certification team rather than risk giving you the wrong process. They will confirm the accepted payment route and any invoice option."}
   ];
 
   /* ---------- Tabs ---------- */
@@ -575,6 +924,14 @@
   function goTo(view){
     document.querySelector('.tab[data-view="'+view+'"]').click();
   }
+  document.getElementById("kbDocsLink").addEventListener("click", function(e){ e.preventDefault(); goTo("documents"); });
+  document.getElementById("libAskLink").addEventListener("click", function(e){ e.preventDefault(); goTo("assistant"); });
+  var wsUpload = document.getElementById("wsUploadBtn");
+  if(wsUpload) wsUpload.addEventListener("click", function(){ goTo("documents"); setTimeout(function(){ var dz=document.getElementById("dropzone"); if(dz) dz.focus(); }, 60); });
+  var wsAsk = document.getElementById("wsAskBtn");
+  if(wsAsk) wsAsk.addEventListener("click", function(){ goTo("assistant"); setTimeout(function(){ var inp=document.getElementById("askInput"); if(inp) inp.focus(); }, 60); });
+  var quickUp = document.getElementById("quickUploadBtn");
+  if(quickUp) quickUp.addEventListener("click", function(){ goTo("documents"); setTimeout(function(){ var fi=document.getElementById("fileInput"); if(fi) fi.click(); }, 80); });
 
   /* ---------- Assistant UI ---------- */
   var suggestions = [
@@ -596,7 +953,76 @@
   });
 
   var logEl = document.getElementById("log");
-  function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+  function askLocalBody(q){
+    var aDiv = document.createElement("div");
+    aDiv.className = "msg-a";
+
+    // 1) The member's own uploaded documents are checked alongside the guides.
+    var up = matchUploaded(q);
+    var res = matchQuestion(q);
+
+    if(up && !res.entry){
+      sessionLog.unshift({question:q, outcome:"answered", topic:"From uploaded document — "+up.doc.name, source:up.doc.name});
+      var excerpt = up.chunk.length > 640 ? up.chunk.slice(0, 640).trim() + "…" : up.chunk;
+      aDiv.innerHTML =
+        '<span class="conf conf-high">● Answered from your document · High confidence</span>' +
+        '<div class="ans"><p>'+esc(excerpt).replace(/\n/g,"<br>")+'</p></div>' +
+        '<div class="cite"><div class="cite-icon">§</div><div><b>'+esc(up.doc.name)+'</b><span>Uploaded document · Passage '+(up.chunkIdx+1)+' of '+up.doc.chunks.length+'</span></div></div>';
+    } else if(res.entry){
+      sessionLog.unshift({question:q, outcome:"answered", topic:res.entry.topic, source:res.entry.source.doc});
+      var extraCite = up ? '<div class="cite"><div class="cite-icon">§</div><div><b>Also in your documents</b><span>'+esc(up.doc.name)+' covers this too — passage '+(up.chunkIdx+1)+'.</span></div></div>' : '';
+      aDiv.innerHTML =
+        '<span class="conf conf-high">● Answered from source · High confidence</span>' +
+        '<div class="ans">'+res.entry.answer+'</div>' +
+        '<div class="cite"><div class="cite-icon">§</div><div><b>'+esc(res.entry.source.doc)+'</b><span>'+esc(res.entry.source.section)+' · Topic — '+esc(res.entry.topic)+'</span><a href="'+res.entry.source.url+'" target="_blank" rel="noopener">Read the source at RAPS ↗</a></div></div>' + extraCite;
+    } else {
+      sessionLog.unshift({question:q, outcome:"handoff", topic:"Unanswered — not covered in the knowledge base", source:null});
+      aDiv.innerHTML =
+        '<span class="conf conf-refuse">● Not in connected sources · Routed to staff</span>' +
+        '<div class="ans"><p>That isn\'t covered in the connected sources, so I haven\'t answered it from general knowledge. I\'ve created a support case for the certification team instead.</p></div>' +
+        '<div class="handoff"><b>Support case created</b>' +
+        'Member asked — “'+esc(q)+'”<br>No matching section was found in the published candidate guides, the recertification guide, or any workspace document. Owner — RAPS certification team. A draft reply is waiting in <a href="#" class="handoffLink">Support Cases</a>.</div>';
+      setTimeout(function(){
+        var link = aDiv.querySelector(".handoffLink");
+        if(link) link.addEventListener("click", function(e){ e.preventDefault(); goTo("staff"); });
+      },0);
+    }
+    logEl.appendChild(aDiv);
+    aDiv.scrollIntoView({behavior:"smooth", block:"nearest"});
+    updateStaffBadge();
+  }
+
+  function renderRemote(q, res){
+    var aDiv = document.createElement("div");
+    aDiv.className = "msg-a";
+    if(res.outcome === "answered"){
+      sessionLog.unshift({question:q, outcome:"answered", topic:"From connected sources (LLM)", source:(res.sources && res.sources[0]) ? res.sources[0].doc : null});
+      var paras = String(res.answer||"").split(/\n{2,}|\n/).filter(function(p){ return p.trim(); }).map(function(p){ return "<p>"+esc(p.trim())+"</p>"; }).join("");
+      var cites = (res.sources||[]).map(function(s){
+        var link = s.url ? '<a href="'+esc(s.url)+'" target="_blank" rel="noopener">Read the source \u2197</a>' : '';
+        return '<div class="cite"><div class="cite-icon">\u00a7</div><div><b>'+esc(s.doc)+'</b><span>'+esc(s.section)+'</span>'+link+'</div></div>';
+      }).join("");
+      aDiv.innerHTML =
+        '<span class="conf conf-high">\u25cf Answered from source \u00b7 LLM ('+esc(String(res.engine||"").replace(/^llm:/,""))+')</span>' +
+        '<div class="ans">'+paras+'</div>' + cites;
+    } else {
+      sessionLog.unshift({question:q, outcome:"handoff", topic:"Unanswered \u2014 not covered in the knowledge base", source:null});
+      aDiv.innerHTML =
+        '<span class="conf conf-refuse">\u25cf Not in connected sources \u00b7 Routed to staff</span>' +
+        '<div class="ans"><p>That isn\'t covered in the connected sources, so I haven\'t answered it from general knowledge. I\'ve created a support case for the certification team instead.</p></div>' +
+        '<div class="handoff"><b>Support case created</b>' +
+        'Member asked \u2014 \u201c'+esc(q)+'\u201d<br>No matching section was found in the connected sources. Owner \u2014 RAPS certification team. A draft reply is waiting in <a href="#" class="handoffLink">Support Cases</a>.</div>';
+      setTimeout(function(){
+        var link = aDiv.querySelector(".handoffLink");
+        if(link) link.addEventListener("click", function(e){ e.preventDefault(); goTo("staff"); });
+      },0);
+    }
+    logEl.appendChild(aDiv);
+    aDiv.scrollIntoView({behavior:"smooth", block:"nearest"});
+    updateStaffBadge();
+  }
 
   function ask(raw){
     var q = (raw||"").trim();
@@ -606,84 +1032,16 @@
     var qDiv = document.createElement("div");
     qDiv.className = "msg-q"; qDiv.textContent = q;
     logEl.appendChild(qDiv);
-
-    // LLM path: when the demo is served by server/server.py, answers are
-    // generated by a real LLM from retrieved source chunks. On static
-    // hosting (GitHub Pages, file://) the fetch fails and the built-in
-    // deterministic engine below answers instead.
     var pending = document.createElement("div");
     pending.className = "msg-a";
-    pending.innerHTML = '<span class="conf">Checking the source documents</span>';
+    pending.innerHTML = '<span class="conf">Checking the connected sources\u2026</span>';
     logEl.appendChild(pending);
-    pending.scrollIntoView({behavior:"smooth", block:"nearest"});
     var ctrl = ("AbortController" in window) ? new AbortController() : null;
     var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 90000) : null;
-    fetch("/api/ask", {method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({question:q}), signal: ctrl ? ctrl.signal : undefined})
-    .then(function(r){ if(!r.ok) throw new Error("no backend"); return r.json(); })
-    .then(function(res){
-      if(timer) clearTimeout(timer);
-      renderRemote(q, res, pending);
-    })
-    .catch(function(){
-      if(timer) clearTimeout(timer);
-      pending.remove();
-      renderLocal(q);
-    });
-  }
-
-  function renderRemote(q, res, aDiv){
-    if(res.outcome === "answered"){
-      sessionLog.unshift({question:q, outcome:"answered", topic:"LLM answer from retrieved sources", source:res.sources && res.sources[0] ? res.sources[0].doc : null});
-      var paras = String(res.answer||"").split(/\n\s*\n/).map(function(p){
-        return '<p>'+esc(p).replace(/\n/g,"<br>")+'</p>'; }).join("");
-      var cites = (res.sources||[]).map(function(s){
-        return '<div class="cite"><div class="cite-icon">§</div><div><b>'+esc(s.doc)+'</b><span>'+esc(s.section)+'</span><a href="'+s.url+'" target="_blank" rel="noopener">Read the source at RAPS ↗</a></div></div>';
-      }).join("");
-      aDiv.innerHTML =
-        '<span class="conf conf-high">Answered from source documents. Model: '+esc(String(res.engine||"").replace(/^llm:/,""))+')</span>' +
-        '<div class="ans">'+paras+'</div>' + cites;
-    } else {
-      sessionLog.unshift({question:q, outcome:"handoff", topic:"Unanswered — not covered in ingested guides", source:null});
-      aDiv.innerHTML =
-        '<span class="conf conf-refuse">Not covered in the source documents. Referred to staff</span>' +
-        '<div class="ans"><p>I cannot answer that from the RAPS candidate guides in this demo, and I will not guess on a credentialing question. I have prepared a handoff for the certification team instead.</p></div>' +
-        '<div class="handoff"><b>Handoff summary for staff</b>' +
-        'Member asked — “'+esc(q)+'”<br>No matching section was found in the RAC-Devices Candidate Guide 2026, RAC-Drugs Candidate Guide 2026, RAPS RAC guide, or Recertification Guide. Suggested owner — RAPS certification team. A draft reply is waiting in the <a href="#" id="handoffLink">Staff view</a>.</div>';
-      setTimeout(function(){
-        var link = aDiv.querySelector("#handoffLink");
-        if(link) link.addEventListener("click", function(e){ e.preventDefault(); goTo("staff"); });
-      },0);
-    }
-    aDiv.scrollIntoView({behavior:"smooth", block:"nearest"});
-    updateStaffBadge();
-  }
-
-  function renderLocal(q){
-    var res = matchQuestion(q);
-    var aDiv = document.createElement("div");
-    aDiv.className = "msg-a";
-    if(res.entry){
-      sessionLog.unshift({question:q, outcome:"answered", topic:res.entry.topic, source:res.entry.source.doc});
-      aDiv.innerHTML =
-        '<span class="conf conf-high">Answered from source documents</span>' +
-        '<div class="ans">'+res.entry.answer+'</div>' +
-        '<div class="cite"><div class="cite-icon">§</div><div><b>'+esc(res.entry.source.doc)+'</b><span>'+esc(res.entry.source.section)+' · Topic — '+esc(res.entry.topic)+'</span><a href="'+res.entry.source.url+'" target="_blank" rel="noopener">Read the source at RAPS ↗</a></div></div>';
-    } else {
-      sessionLog.unshift({question:q, outcome:"handoff", topic:"Unanswered — not covered in ingested guides", source:null});
-      aDiv.innerHTML =
-        '<span class="conf conf-refuse">Not covered in the source documents. Referred to staff</span>' +
-        '<div class="ans"><p>I cannot answer that from the RAPS candidate guides in this demo, and I will not guess on a credentialing question. I have prepared a handoff for the certification team instead.</p></div>' +
-        '<div class="handoff"><b>Handoff summary for staff</b>' +
-        'Member asked — “'+esc(q)+'”<br>No matching section was found in the RAC-Devices Candidate Guide 2026, RAC-Drugs Candidate Guide 2026, RAPS RAC guide, or Recertification Guide. Suggested owner — RAPS certification team. A draft reply is waiting in the <a href="#" id="handoffLink">Staff view</a>.</div>';
-      setTimeout(function(){
-        var link = aDiv.querySelector("#handoffLink");
-        if(link) link.addEventListener("click", function(e){ e.preventDefault(); goTo("staff"); });
-      },0);
-    }
-    logEl.appendChild(aDiv);
-    aDiv.scrollIntoView({behavior:"smooth", block:"nearest"});
-    updateStaffBadge();
+    fetch("/api/ask", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({question:q}), signal: ctrl ? ctrl.signal : undefined})
+      .then(function(r){ if(!r.ok) throw new Error("backend " + r.status); return r.json(); })
+      .then(function(res){ if(timer) clearTimeout(timer); pending.remove(); renderRemote(q, res); })
+      .catch(function(){ if(timer) clearTimeout(timer); pending.remove(); askLocalBody(q); });
   }
 
   document.getElementById("askForm").addEventListener("submit", function(e){
@@ -749,12 +1107,12 @@
   /* ---------- Staff view ---------- */
   function allQueue(){
     var live = sessionLog.map(function(s){
-      return {question:s.question, outcome:s.outcome, topic:s.topic, source:s.source, demo:false,
+      return {question:s.question, outcome:s.outcome, topic:s.topic, source:s.source, seed:false,
         draft: s.outcome==="answered"
-          ? "Hi — thanks for your question. " + "This was answered automatically from the RAPS candidate guides ("+(s.topic||"cited section")+"), so no action is needed unless you would like a person to double-check it."
+          ? "Hi — thanks for your question. " + "This was answered automatically from the knowledge base ("+(s.topic||"cited section")+"), so no action is needed unless you would like a person to double-check it."
           : "Hi — thanks for asking. The published candidate guides do not cover this, so I am answering personally rather than sending you an automated reply. I will follow up with a confirmed answer shortly."};
     });
-    return live.concat(demoInbox);
+    return live.concat(seedQueue);
   }
   function updateStaffBadge(){
     var n = sessionLog.length;
@@ -772,7 +1130,7 @@
     var queueEl = document.getElementById("queue");
     queueEl.innerHTML = "";
     if(!q.length){
-      queueEl.innerHTML = '<div class="empty">No questions yet. Ask something in the Member assistant and it will appear here.</div>';
+      queueEl.innerHTML = '<div class="empty">No questions yet. Ask something in the assistant and it will appear here.</div>';
     }
     q.forEach(function(item){
       var div = document.createElement("div");
@@ -785,7 +1143,7 @@
         '<p><b>Topic —</b> '+esc(item.topic||"")+(item.source ? ' &nbsp;·&nbsp; <b>Source —</b> '+esc(item.source) : '')+'</p>'+
         '<label class="small" style="font-weight:600">Draft reply — staff edits before sending</label>'+
         '<textarea>'+esc(item.draft)+'</textarea>'+
-        '<div class="qmeta"><span>'+(item.demo ? "Demo inbox example" : "From this session · Member assistant")+'</span><span>Assistant never sends drafts automatically</span></div>';
+        '<div class="qmeta"><span>'+(item.seed ? "Recent queue" : "From this session · Assistant")+'</span><span>Assistant never sends drafts automatically</span></div>';
       queueEl.appendChild(div);
     });
 
@@ -795,12 +1153,12 @@
       unEl.innerHTML = '<p class="small">Nothing unanswered right now.</p>';
     } else {
       unEl.innerHTML = un.map(function(item){
-        return '<div class="doc"><div class="doc-num">?</div><div><b style="font-size:13.5px">'+esc(item.question)+'</b><span>'+esc(item.topic||"Not covered in ingested guides")+' — candidate for a new FAQ page</span></div></div>';
+        return '<div class="doc"><div class="doc-num">?</div><div><b style="font-size:13.5px">'+esc(item.question)+'</b><span>'+esc(item.topic||"Not covered in the knowledge base")+' — candidate for a new FAQ page or document upload</span></div></div>';
       }).join("");
     }
   }
 
-  /* ---------- Test set ---------- */
+  /* ---------- Quality checks ---------- */
   var TESTS = [
     {q:"Am I eligible with a bachelor's degree and 3 years of experience?", expect:"answer", id:"eligibility"},
     {q:"Does quality assurance work count as experience?", expect:"answer", id:"related-exp"},
@@ -826,7 +1184,7 @@
         : r.pass ? '<div class="test-ic ic-pass">✓</div>' : '<div class="test-ic ic-fail">✕</div>';
       var detail = !r ? "Not run yet"
         : r.pass
-          ? (t.expect==="answer" ? "Answered with citation — "+r.topic : "Correctly refused and handed off — no guess made")
+          ? (t.expect==="answer" ? "Answered with citation — "+r.topic : "Correctly routed to staff — no answer attempted")
           : "Expected "+(t.expect==="answer" ? "an answer from "+t.id : "a refusal")+", got "+(r.got==="answer" ? "an answer" : "a refusal");
       row.innerHTML = icon + '<div style="flex:1"><b>'+esc(t.q)+'</b><span>'+detail+'</span></div><span class="expect">'+(t.expect==="answer"?"Should answer":"Should refuse")+'</span>';
       testListEl.appendChild(row);
@@ -840,36 +1198,32 @@
       var res = matchQuestion(t.q);
       var got = res.entry ? "answer" : "refuse";
       var pass = t.expect==="answer" ? (got==="answer" && res.entry.id===t.id) : (got==="refuse");
-      // Allow a near match on topic family for eligibility-style questions
       if(t.expect==="answer" && got==="answer" && !pass && res.entry) pass = false;
       return {pass:pass, got:got, topic: res.entry ? res.entry.topic : null};
     });
     var idx = 0;
-    var shown = TESTS.map(function(){ return null; });
     var timer = setInterval(function(){
       if(idx >= TESTS.length){
         clearInterval(timer);
         var passed = results.filter(function(r){return r.pass;}).length;
         var pct = Math.round(passed/TESTS.length*100);
-        document.getElementById("scoreRing").style.setProperty("--p", pct);
+        document.getElementById("scoreBarFill").style.width = pct+"%";
         document.getElementById("scoreNum").textContent = passed+"/"+TESTS.length;
-        document.querySelector(".score-inner span").textContent = pct+"% passed";
+        document.getElementById("scorePct").textContent = pct+"% passed";
         var answeredOk = results.filter(function(r,i){return TESTS[i].expect==="answer" && r.pass;}).length;
         var refusedOk = results.filter(function(r,i){return TESTS[i].expect==="refuse" && r.pass;}).length;
         document.getElementById("scoreDetail").innerHTML =
-          "<p style='margin:0'><b>"+passed+" of "+TESTS.length+" passed.</b> Citation coverage on in-scope questions — "+answeredOk+"/8 answered from the correct guide section. Correct refusals — "+refusedOk+"/4 out-of-scope questions handed off with no guess. Re-run this set after any guide update; a drop here is the first sign an answer went stale.</p>";
-        btn.disabled = false; btn.textContent = "Run test set again";
+          "<p style='margin:0'><b>"+passed+" of "+TESTS.length+" passed.</b> Citation coverage — "+answeredOk+"/8 in-scope questions answered from the correct section. Correct routing — "+refusedOk+"/4 out-of-scope questions sent to staff. Re-run after any guide update or document change; a drop here is the first sign coverage has slipped.</p>";
+        btn.disabled = false; btn.textContent = "Run coverage check again";
         return;
       }
-      shown[idx] = results[idx];
-      renderTests(shown.slice());
-      // renderTests expects full array with nulls — rebuild properly
       var partial = TESTS.map(function(_,j){ return j<=idx ? results[j] : null; });
       renderTests(partial);
       idx++;
     }, 160);
   });
 
+  renderUserDocs();
   renderStaff();
 })();
 </script>

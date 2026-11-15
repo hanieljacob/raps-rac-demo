@@ -8,44 +8,44 @@
 <title>RAPS RAC Demo — Cited Assistant, Eligibility Checker &amp; Staff View</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f7f8f7;
+    --bg:#f3f4f6;
     --surface:#ffffff;
-    --surface-2:#eef2f0;
-    --surface-3:#e3eae6;
-    --ink:#13222b;
-    --ink-2:#43545f;
-    --ink-3:#6b7d88;
-    --line:#d7dfdb;
-    --teal:#0b6b66;
-    --teal-dark:#084f4b;
-    --teal-soft:#dff0ee;
-    --navy:#12344d;
-    --amber:#9a5b00;
-    --amber-bg:#fdf0d3;
-    --green:#1a6b3c;
-    --green-bg:#dff3e4;
-    --red:#9e2b25;
-    --red-bg:#fbe7e4;
-    --radius:14px;
-    --radius-sm:9px;
-    --shadow:0 1px 2px rgba(18,52,77,.06),0 8px 24px rgba(18,52,77,.06);
+    --surface-2:#eef1f4;
+    --surface-3:#e2e7ec;
+    --ink:#1a2433;
+    --ink-2:#45536a;
+    --ink-3:#6e7a8c;
+    --line:#d3d9e0;
+    --teal:#1f4e79;
+    --teal-dark:#173d5f;
+    --teal-soft:#e7edf3;
+    --navy:#14263f;
+    --amber:#8a5a00;
+    --amber-bg:#f7efdb;
+    --green:#1e6138;
+    --green-bg:#e6efe9;
+    --red:#93322c;
+    --red-bg:#f6e9e7;
+    --radius:6px;
+    --radius-sm:4px;
+    --shadow:0 1px 2px rgba(20,38,63,.05);
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg:#0e1518;
-      --surface:#162126;
-      --surface-2:#1c2a30;
-      --surface-3:#24343b;
-      --ink:#e8efec;
-      --ink-2:#b6c4bf;
-      --ink-3:#8a9a95;
-      --line:#2c3d42;
-      --teal:#3ec2b8;
-      --teal-dark:#7fd8d0;
-      --teal-soft:#123b38;
+      --bg:#10151d;
+      --surface:#171e29;
+      --surface-2:#1e2735;
+      --surface-3:#28344a;
+      --ink:#e9edf2;
+      --ink-2:#b3bdcc;
+      --ink-3:#8b96a8;
+      --line:#2d394c;
+      --teal:#7aa7d4;
+      --teal-dark:#a9c6e6;
+      --teal-soft:#1d2f47;
       --navy:#a8cbe8;
       --amber:#f0b95a;
       --amber-bg:#3a2c10;
@@ -68,26 +68,26 @@
   .topbar{border-bottom:1px solid var(--line);background:var(--surface)}
   .topbar-inner{max-width:1120px;margin:0 auto;padding:22px 18px 18px;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
   .brandline{display:flex;gap:14px;align-items:flex-start;max-width:680px}
-  .mark{width:46px;height:46px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:"IBM Plex Serif",serif;font-weight:700;font-size:15px;letter-spacing:.02em;flex:none}
+  .mark{width:46px;height:46px;border-radius:4px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;letter-spacing:.04em;flex:none}
   @media (prefers-color-scheme: dark){.mark{background:var(--teal-soft);color:var(--teal-dark)}}
-  h1{font-family:"IBM Plex Serif",Georgia,serif;font-size:clamp(24px,4vw,34px);line-height:1.12;margin:2px 0 6px;font-weight:700;letter-spacing:-.01em}
+  h1{font-size:clamp(23px,3.4vw,30px);line-height:1.15;margin:2px 0 6px;font-weight:700;letter-spacing:0}
   .lede{margin:0;color:var(--ink-2);font-size:15.5px;max-width:62ch}
   .source-note{margin-top:10px;font-size:13px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 14px}
   .source-note a{font-weight:500}
-  .demo-badge{flex:none;background:var(--teal-soft);color:var(--teal-dark);border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+  .demo-badge{flex:none;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);padding:7px 11px;border-radius:4px;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
 
   /* Stats strip */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 4px}
   .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
-  .stat b{display:block;font-size:22px;line-height:1.1;font-weight:700}
+  .stat b{display:block;font-size:19px;line-height:1.15;font-weight:700}
   .stat span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-2);line-height:1.4}
   @media(max-width:720px){.stats{grid-template-columns:1fr 1fr}}
 
   /* Tabs */
   .tabs{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 10px}
-  .tablist{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:5px;flex-wrap:wrap}
+  .tablist{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px;flex-wrap:wrap}
   @media(max-width:640px){.tab{flex:1 1 42%}}
-  .tab{flex:1 0 auto;border:0;background:transparent;color:var(--ink-2);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;min-height:44px;white-space:nowrap}
+  .tab{flex:1 0 auto;border:0;background:transparent;color:var(--ink-2);padding:10px 16px;border-radius:5px;font-weight:600;font-size:14px;cursor:pointer;min-height:44px;white-space:nowrap}
   .tab[aria-selected="true"]{background:var(--navy);color:#fff}
   @media (prefers-color-scheme: dark){.tab[aria-selected="true"]{background:var(--teal);color:#082a28}}
   .tab:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
@@ -100,7 +100,7 @@
   .grid-2{display:grid;grid-template-columns:1.55fr .95fr;gap:16px;align-items:start}
   @media(max-width:860px){.grid-2{grid-template-columns:1fr}}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
-  .card h2{font-family:"IBM Plex Serif",Georgia,serif;font-size:20px;margin:0 0 6px;line-height:1.25}
+  .card h2{font-size:18px;margin:0 0 6px;line-height:1.25;font-weight:700}
   .card h3{font-size:15px;margin:18px 0 8px}
   .card p{color:var(--ink-2)}
   .card p:first-of-type{margin-top:0}
@@ -109,60 +109,60 @@
 
   /* Assistant */
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
-  .chip{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:9px 13px;font-size:13.5px;font-weight:500;cursor:pointer;min-height:40px;text-align:left}
+  .chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:9px 13px;font-size:13.5px;font-weight:500;cursor:pointer;min-height:40px;text-align:left}
   .chip:hover{border-color:var(--teal);color:var(--teal-dark)}
   .askrow{display:flex;gap:8px;margin-top:14px}
-  .askrow input{flex:1;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--surface);color:var(--ink);min-width:0}
-  .btn{border:0;border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer;min-height:44px}
+  .askrow input{flex:1;border:1px solid var(--line);border-radius:6px;padding:11px 13px;background:var(--surface);color:var(--ink);min-width:0}
+  .btn{border:0;border-radius:6px;padding:11px 18px;font-weight:600;cursor:pointer;min-height:44px}
   .btn-primary{background:var(--teal);color:#fff}
   .btn-primary:hover{background:var(--teal-dark)}
   @media (prefers-color-scheme: dark){.btn-primary{color:#06201e}}
   .btn-ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
   .btn-navy{background:var(--navy);color:#fff}
   .log{display:flex;flex-direction:column;gap:14px;margin-top:18px}
-  .msg-q{align-self:flex-end;max-width:88%;background:var(--navy);color:#fff;padding:11px 14px;border-radius:14px 14px 4px 14px;font-size:14.5px}
+  .msg-q{align-self:flex-end;max-width:88%;background:var(--navy);color:#fff;padding:11px 14px;border-radius:6px;font-size:14.5px}
   @media (prefers-color-scheme: dark){.msg-q{background:var(--surface-3);color:var(--ink)}}
-  .msg-a{align-self:flex-start;max-width:96%;width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:15px 16px}
+  .msg-a{align-self:flex-start;max-width:96%;width:100%;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:6px;padding:15px 16px}
   .msg-a .ans{font-size:14.5px}
   .msg-a .ans ul{margin:8px 0 8px 18px;padding:0}
   .msg-a .ans li{margin:4px 0}
   .cite{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;display:flex;gap:10px;align-items:flex-start}
-  .cite-icon{width:28px;height:28px;border-radius:7px;background:var(--teal-soft);color:var(--teal-dark);display:grid;place-items:center;font-size:13px;flex:none;font-weight:700}
+  .cite-icon{width:28px;height:28px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);display:grid;place-items:center;font-size:13px;flex:none;font-weight:700}
   .cite b{font-size:13px;display:block}
   .cite span{font-size:12.5px;color:var(--ink-2);display:block}
   .cite a{font-size:12.5px;font-weight:500}
-  .conf{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;margin-bottom:8px}
-  .conf-high{background:var(--green-bg);color:var(--green)}
-  .conf-refuse{background:var(--amber-bg);color:var(--amber)}
-  .handoff{margin-top:12px;background:var(--amber-bg);border-radius:var(--radius-sm);padding:12px 13px;font-size:13.5px}
+  .conf{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:0;margin-bottom:8px}
+  .conf-high{background:transparent;color:var(--green)}
+  .conf-refuse{background:transparent;color:var(--amber)}
+  .handoff{margin-top:12px;background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:var(--radius-sm);padding:12px 13px;font-size:13.5px}
   .handoff b{display:block;margin-bottom:4px}
   .empty{border:1.5px dashed var(--line);border-radius:var(--radius);padding:22px;text-align:center;color:var(--ink-3);font-size:14px}
 
   /* Docs list */
   .doc{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
   .doc:last-child{border-bottom:0}
-  .doc-num{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+  .doc-num{width:30px;height:30px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
   .doc b{font-size:14px;display:block}
   .doc span{font-size:12.5px;color:var(--ink-2);display:block}
-  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:999px;background:var(--teal-soft);color:var(--teal-dark);margin-top:5px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:3px;background:var(--teal-soft);color:var(--teal-dark);margin-top:5px}
 
   /* Eligibility */
   .field{margin-bottom:16px}
   .field label{display:block;font-weight:600;font-size:14px;margin-bottom:7px}
-  .field select,.field input[type="number"]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:var(--surface);color:var(--ink)}
+  .field select,.field input[type="number"]{width:100%;border:1px solid var(--line);border-radius:6px;padding:11px 12px;background:var(--surface);color:var(--ink)}
   .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   @media(max-width:520px){.checks{grid-template-columns:1fr}}
-  .check{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:11px 12px;cursor:pointer;min-height:44px}
+  .check{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:6px;padding:11px 12px;cursor:pointer;min-height:44px}
   .check input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--teal)}
   .check span{font-size:13.5px;line-height:1.4}
   .check span small{display:block;color:var(--ink-3);font-size:12px}
   .range-row{display:flex;align-items:center;gap:12px}
   .range-row input[type="range"]{flex:1;accent-color:var(--teal);min-height:44px}
   .range-val{font-weight:700;font-size:18px;min-width:74px;text-align:right}
-  .verdict{border-radius:var(--radius);padding:18px;border:1px solid var(--line)}
-  .verdict-yes{background:var(--green-bg);border-color:transparent}
-  .verdict-no{background:var(--red-bg);border-color:transparent}
-  .verdict-close{background:var(--amber-bg);border-color:transparent}
+  .verdict{border-radius:var(--radius);padding:18px;border:1px solid var(--line);background:var(--surface)}
+  .verdict-yes{border-left:4px solid var(--green)}
+  .verdict-no{border-left:4px solid var(--red)}
+  .verdict-close{border-left:4px solid var(--amber)}
   .verdict h3{margin:0 0 6px;font-size:17px}
   .verdict p{margin:6px 0;color:var(--ink)}
   .rulebox{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 14px;font-size:13.5px}
@@ -182,30 +182,30 @@
   .qitem{border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;background:var(--surface)}
   .qitem-head{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
   .qitem h3{margin:0;font-size:15px;flex:1;min-width:200px}
-  .status{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap}
+  .status{font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:3px;white-space:nowrap}
   .st-answered{background:var(--green-bg);color:var(--green)}
   .st-handoff{background:var(--amber-bg);color:var(--amber)}
   .st-draft{background:var(--teal-soft);color:var(--teal-dark)}
   .qitem p{font-size:13.5px;margin:8px 0}
-  .qitem textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 11px;background:var(--surface-2);color:var(--ink);font-size:13.5px;resize:vertical;min-height:74px;margin-top:6px}
+  .qitem textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:10px 11px;background:var(--surface-2);color:var(--ink);font-size:13.5px;resize:vertical;min-height:74px;margin-top:6px}
   .qmeta{font-size:12px;color:var(--ink-3);margin-top:8px;display:flex;flex-wrap:wrap;gap:4px 14px}
 
   /* Tests */
   .score-hero{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-  .score-ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;flex:none;background:conic-gradient(var(--teal) calc(var(--p,0)*1%), var(--surface-3) 0)}
+  .score-ring{width:104px;height:104px;border-radius:6px;display:grid;place-items:center;flex:none;background:var(--navy)}
   .score-ring inner{display:none}
-  .score-inner{width:82px;height:82px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
-  .score-inner b{font-size:21px;line-height:1;display:block}
-  .score-inner span{font-size:10.5px;color:var(--ink-3);display:block;margin-top:2px}
+  .score-inner{width:82px;height:82px;display:grid;place-items:center;text-align:center}
+  .score-inner b{font-size:24px;line-height:1;display:block;color:#fff}
+  .score-inner span{font-size:10.5px;color:#c3d0e0;display:block;margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
   .test-row{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
   .test-row:last-child{border-bottom:0}
-  .test-ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;margin-top:1px}
+  .test-ic{width:28px;height:28px;border-radius:4px;display:grid;place-items:center;font-size:13px;font-weight:700;flex:none;margin-top:1px}
   .ic-pass{background:var(--green-bg);color:var(--green)}
   .ic-fail{background:var(--red-bg);color:var(--red)}
   .ic-wait{background:var(--surface-2);color:var(--ink-3);border:1px solid var(--line)}
   .test-row b{font-size:14px;display:block}
   .test-row span{font-size:12.5px;color:var(--ink-2);display:block}
-  .expect{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 7px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);white-space:nowrap;margin-top:3px}
+  .expect{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 7px;border-radius:3px;background:var(--surface-2);border:1px solid var(--line);white-space:nowrap;margin-top:3px}
 
   footer{margin-top:28px;border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -219,7 +219,7 @@
       <div class="mark" aria-hidden="true">RAC</div>
       <div>
         <h1>RAPS RAC Assistant</h1>
-        <p class="lede">A working demo for the Regulatory Affairs Certification — answers drawn only from RAPS public candidate guides, with the source shown on every answer, an eligibility checker, and a staff view for the questions it cannot answer.</p>
+        <p class="lede">Working demonstration for the Regulatory Affairs Certification (RAC). Answers are drawn only from RAPS public candidate guides, with the source shown on every answer. Includes an eligibility checker and a staff view for questions the system cannot answer.</p>
         <div class="source-note">
           <span>Sources ingested Nov 15, 2026</span>
           <a href="https://www.raps.org/resource/rac-regulatory-affairs-certification-drugs-devices.html" target="_blank" rel="noopener">RAPS RAC guide</a>
@@ -613,7 +613,7 @@
     // deterministic engine below answers instead.
     var pending = document.createElement("div");
     pending.className = "msg-a";
-    pending.innerHTML = '<span class="conf">● Checking the source documents…</span>';
+    pending.innerHTML = '<span class="conf">Checking the source documents</span>';
     logEl.appendChild(pending);
     pending.scrollIntoView({behavior:"smooth", block:"nearest"});
     var ctrl = ("AbortController" in window) ? new AbortController() : null;
@@ -641,12 +641,12 @@
         return '<div class="cite"><div class="cite-icon">§</div><div><b>'+esc(s.doc)+'</b><span>'+esc(s.section)+'</span><a href="'+s.url+'" target="_blank" rel="noopener">Read the source at RAPS ↗</a></div></div>';
       }).join("");
       aDiv.innerHTML =
-        '<span class="conf conf-high">● Answered from source · LLM ('+esc(String(res.engine||"").replace(/^llm:/,""))+')</span>' +
+        '<span class="conf conf-high">Answered from source documents. Model: '+esc(String(res.engine||"").replace(/^llm:/,""))+')</span>' +
         '<div class="ans">'+paras+'</div>' + cites;
     } else {
       sessionLog.unshift({question:q, outcome:"handoff", topic:"Unanswered — not covered in ingested guides", source:null});
       aDiv.innerHTML =
-        '<span class="conf conf-refuse">● Not in the source documents · Handed off</span>' +
+        '<span class="conf conf-refuse">Not covered in the source documents. Referred to staff</span>' +
         '<div class="ans"><p>I cannot answer that from the RAPS candidate guides in this demo, and I will not guess on a credentialing question. I have prepared a handoff for the certification team instead.</p></div>' +
         '<div class="handoff"><b>Handoff summary for staff</b>' +
         'Member asked — “'+esc(q)+'”<br>No matching section was found in the RAC-Devices Candidate Guide 2026, RAC-Drugs Candidate Guide 2026, RAPS RAC guide, or Recertification Guide. Suggested owner — RAPS certification team. A draft reply is waiting in the <a href="#" id="handoffLink">Staff view</a>.</div>';
@@ -666,13 +666,13 @@
     if(res.entry){
       sessionLog.unshift({question:q, outcome:"answered", topic:res.entry.topic, source:res.entry.source.doc});
       aDiv.innerHTML =
-        '<span class="conf conf-high">● Answered from source · High confidence</span>' +
+        '<span class="conf conf-high">Answered from source documents</span>' +
         '<div class="ans">'+res.entry.answer+'</div>' +
         '<div class="cite"><div class="cite-icon">§</div><div><b>'+esc(res.entry.source.doc)+'</b><span>'+esc(res.entry.source.section)+' · Topic — '+esc(res.entry.topic)+'</span><a href="'+res.entry.source.url+'" target="_blank" rel="noopener">Read the source at RAPS ↗</a></div></div>';
     } else {
       sessionLog.unshift({question:q, outcome:"handoff", topic:"Unanswered — not covered in ingested guides", source:null});
       aDiv.innerHTML =
-        '<span class="conf conf-refuse">● Not in the source documents · Handed off</span>' +
+        '<span class="conf conf-refuse">Not covered in the source documents. Referred to staff</span>' +
         '<div class="ans"><p>I cannot answer that from the RAPS candidate guides in this demo, and I will not guess on a credentialing question. I have prepared a handoff for the certification team instead.</p></div>' +
         '<div class="handoff"><b>Handoff summary for staff</b>' +
         'Member asked — “'+esc(q)+'”<br>No matching section was found in the RAC-Devices Candidate Guide 2026, RAC-Drugs Candidate Guide 2026, RAPS RAC guide, or Recertification Guide. Suggested owner — RAPS certification team. A draft reply is waiting in the <a href="#" id="handoffLink">Staff view</a>.</div>';
